@@ -1,7 +1,9 @@
 import React, { useCallback, useRef, useState } from 'react';
 import { Image as ImageIcon } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext.jsx';
 
 export function ImageUploader({ onImageLoaded }) {
+  const { t } = useLanguage();
   const inputRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -38,7 +40,7 @@ export function ImageUploader({ onImageLoaded }) {
 
   return (
     <div
-      className={`border rounded-md p-4 py-8 flex flex-col items-center text-xs cursor-pointer ${
+      className={`border rounded-md p-4 py-12 flex flex-col items-center text-xs cursor-pointer ${
         isDragging ? 'border-orange-500 bg-neutral-900' : 'border-neutral-700 bg-neutral-950'
       }`}
       onClick={() => inputRef.current?.click()}
@@ -49,9 +51,9 @@ export function ImageUploader({ onImageLoaded }) {
       <div className="w-16 h-16 mb-4 rounded-full bg-orange-600 flex items-center justify-center text-white">
         <ImageIcon size={32} />
       </div>
-      <div className="font-medium mb-3 text-xl">Upload image</div>
-      <div className="text-neutral-400">
-        Click to choose or drag &amp; drop a photo (JPG, PNG, WEBP).
+      <div className="font-bold mb-3 text-xl">{t('upload image')}</div>
+      <div className="text-neutral-400 text-center max-w-[250px] mt-2">
+        {t('click to dropzone')}
       </div>
       <input
         ref={inputRef}

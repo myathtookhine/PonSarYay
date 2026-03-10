@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useLanguage } from '../../contexts/LanguageContext.jsx';
 
 export function ExportPanel({ canvasApi }) {
+  const { t } = useLanguage();
   const [format, setFormat] = useState('png');
   const [quality, setQuality] = useState(0.92);
   const [multiplier, setMultiplier] = useState(1);
@@ -11,10 +13,10 @@ export function ExportPanel({ canvasApi }) {
 
   return (
     <div className="space-y-1.5 md:space-y-2 text-xs">
-      <div className="font-semibold text-xs md:text-sm mb-0.5">Export</div>
+      <div className="font-semibold text-xs md:text-sm mb-0.5">{t('export')}</div>
 
       <div className="space-y-0.5 md:space-y-1">
-        <div className="text-[11px] text-neutral-300">Format</div>
+        <div className="text-[11px] text-neutral-300">{t('format')}</div>
         <div className="flex gap-1">
           {['png', 'jpeg'].map(f => (
             <button
@@ -35,7 +37,7 @@ export function ExportPanel({ canvasApi }) {
 
       {format === 'jpeg' && (
         <div className="space-y-0.5 md:space-y-1">
-          <div className="text-[11px] text-neutral-300">Quality</div>
+          <div className="text-[11px] text-neutral-300">{t('quality')}</div>
           <div className="flex items-center gap-2">
             <input
               type="range"
@@ -52,7 +54,7 @@ export function ExportPanel({ canvasApi }) {
       )}
 
       <div className="space-y-0.5 md:space-y-1">
-        <div className="text-[11px] text-neutral-300">Size</div>
+        <div className="text-[11px] text-neutral-300">{t('size')}</div>
         <div className="flex gap-1">
           {[1, 2, 3].map(m => (
             <button
@@ -76,7 +78,7 @@ export function ExportPanel({ canvasApi }) {
         onClick={onExport}
         className="w-full mt-1 rounded-md bg-orange-600 text-sm py-2 md:py-3"
       >
-        Download image
+        {t('download image')}
       </button>
     </div>
   );

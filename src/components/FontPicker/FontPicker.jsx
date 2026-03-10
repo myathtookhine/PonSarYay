@@ -1,10 +1,12 @@
 import React, { useMemo, useState } from 'react';
 import { MYANMAR_FONTS, ENGLISH_FONTS } from './fonts.config.js';
 import { FontPreviewCard } from './FontPreviewCard.jsx';
+import { useLanguage } from '../../contexts/LanguageContext.jsx';
 
 const ENCODING_TABS = ['all', 'myanmar', 'english'];
 
 export function FontPicker({ selectedFontId, onFontChange }) {
+  const { t } = useLanguage();
   const [encodingFilter, setEncodingFilter] = useState('all');
   const [query, setQuery] = useState('');
 
@@ -22,12 +24,12 @@ export function FontPicker({ selectedFontId, onFontChange }) {
 
   return (
     <div className="flex flex-col gap-1.5 md:gap-2 text-xs">
-      <div className="font-semibold text-xs md:text-sm">Fonts</div>
+      <div className="font-semibold text-xs md:text-sm">{t('fonts')}</div>
       <input
         type="text"
         value={query}
         onChange={e => setQuery(e.target.value)}
-        placeholder="Search fonts…"
+        placeholder={t('search fonts...')}
         className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-2 py-0.5 md:py-1 text-xs outline-none focus:border-orange-500"
       />
       <div className="flex gap-1 mt-0.5">
@@ -42,7 +44,7 @@ export function FontPicker({ selectedFontId, onFontChange }) {
                 : 'bg-neutral-900 text-neutral-300 border border-neutral-700'
             }`}
           >
-            {tab}
+            {t(tab)}
           </button>
         ))}
       </div>

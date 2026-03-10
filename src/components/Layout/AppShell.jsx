@@ -7,13 +7,15 @@ import { TextControls } from '../TextControls/TextControls.jsx';
 import { CropModal } from '../CropTool/CropModal.jsx';
 import { ExportPanel } from '../ExportPanel/ExportPanel.jsx';
 import { useCanvas } from '../Canvas/useCanvas.js';
-import { Sun, Moon } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext.jsx';
+import { Sun, Moon, Languages } from 'lucide-react';
 
-const MOBILE_TABS = ['text', 'fonts', 'export'];
+const MOBILE_TABS = ['text controls', 'fonts', 'export'];
 
 export function AppShell() {
   const canvasApi = useCanvas();
-  const [activeMobileTab, setActiveMobileTab] = useState('text');
+  const { t, language, changeLanguage } = useLanguage();
+  const [activeMobileTab, setActiveMobileTab] = useState('text controls');
   const [isCropOpen, setIsCropOpen] = useState(false);
   const [toast, setToast] = useState(null);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
@@ -43,17 +45,29 @@ export function AppShell() {
             PonSarYay
           </div>
           <div className="text-xs text-neutral-400">
-            Myanmar Text-on-Image Editor
+            {t('myanmar text-on-image editor')}
           </div>
         </div>
-        <button
-          type="button"
-          onClick={() => setDarkMode(prev => !prev)}
-          className="p-2 rounded-md border border-neutral-700 hover:bg-neutral-800 text-neutral-300"
-          title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
-        >
-          {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-        </button>
+        <div className="flex items-center gap-2 md:gap-3">
+          <button
+            type="button"
+            onClick={() => changeLanguage(language === 'en' ? 'my' : 'en')}
+            className="p-1.5 md:p-2 rounded-md border border-neutral-700 hover:bg-neutral-800 text-neutral-300 flex items-center gap-1.5 text-xs font-medium"
+            title={t('change language')}
+          >
+            <Languages size={16} />
+            <span className="hidden md:inline">{language === 'en' ? 'MY' : 'EN'}</span>
+            <span className="md:hidden">{language === 'en' ? 'MY' : 'EN'}</span>
+          </button>
+          <button
+            type="button"
+            onClick={() => setDarkMode(prev => !prev)}
+            className="p-1.5 md:p-2 rounded-md border border-neutral-700 hover:bg-neutral-800 text-neutral-300"
+            title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
+          >
+            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+        </div>
       </header>
 
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden min-h-0">
@@ -111,12 +125,12 @@ export function AppShell() {
                     : 'text-neutral-400'
                 }`}
               >
-                {tab}
+                {t(tab)}
               </button>
             ))}
           </div>
           <div className="bg-neutral-950 border-t border-neutral-800 p-2 h-[22vh] min-h-[120px] overflow-y-auto overscroll-contain">
-            {activeMobileTab === 'text' && <TextControls canvasApi={canvasApi} />}
+            {activeMobileTab === 'text controls' && <TextControls canvasApi={canvasApi} />}
             {activeMobileTab === 'fonts' && (
               <FontPicker
                 selectedFontId={canvasApi.selectedFontId}

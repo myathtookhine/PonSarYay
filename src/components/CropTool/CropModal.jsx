@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import { useLanguage } from '../../contexts/LanguageContext.jsx';
 
 export function CropModal({ isOpen, onClose, canvasApi }) {
+  const { t } = useLanguage();
   const [src, setSrc] = useState(null);
   const [crop, setCrop] = useState({ unit: '%', x: 10, y: 10, width: 80, height: 80 });
   const [completedCrop, setCompletedCrop] = useState(null);
@@ -68,19 +70,19 @@ export function CropModal({ isOpen, onClose, canvasApi }) {
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 p-4">
       <div className="w-full max-w-lg max-h-[90vh] flex flex-col rounded-lg bg-neutral-950 border border-neutral-800 p-4 text-xs">
         <div className="flex items-center justify-between mb-3 shrink-0">
-          <div className="font-semibold text-sm">Crop image</div>
+          <div className="font-semibold text-sm">{t('crop image')}</div>
           <button
             type="button"
             onClick={onClose}
             className="text-neutral-400 hover:text-neutral-200"
           >
-            Close
+            {t('close')}
           </button>
         </div>
 
         {!src && (
           <div className="text-neutral-400">
-            Upload an image first, then open the crop tool.
+            {t('upload an image first for crop')}
           </div>
         )}
 
@@ -108,14 +110,14 @@ export function CropModal({ isOpen, onClose, canvasApi }) {
                 onClick={onClose}
                 className="px-3 py-1.5 rounded-md border border-neutral-700 text-xs hover:bg-neutral-800"
               >
-                Cancel
+                {t('cancel')}
               </button>
               <button
                 type="button"
                 onClick={handleApply}
                 className="px-3 py-1.5 rounded-md bg-orange-600 hover:bg-orange-700 text-white text-xs"
               >
-                Apply crop
+                {t('apply crop')}
               </button>
             </div>
           </div>

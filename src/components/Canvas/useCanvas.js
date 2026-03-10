@@ -156,11 +156,14 @@ export function useCanvas() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const textWidth = Math.round(canvas.getWidth() * 0.8);
-    const textbox = new Textbox('PonSarYay', {
+    const initialText = 'လက်ရေးလှလှ';
+    const measureText = new IText(initialText, { fontSize: 32 });
+    const exactWidth = measureText.width + 10; // add a little buffer
+
+    const textbox = new Textbox(initialText, {
       fill: '#ffffff',
-      fontSize: 32,
-      width: textWidth,
+      fontSize: 28,
+      width: exactWidth,
       originX: 'center',
       originY: 'center',
       left: canvas.getWidth() / 2,
@@ -342,8 +345,10 @@ export function useCanvas() {
     canvas.backgroundColor = 'transparent';
     canvas.renderAll();
     setHasImage(false);
-    saveHistory();
-  }, [saveHistory]);
+    history.current = { undo: [], redo: [] };
+    setCanUndo(false);
+    setCanRedo(false);
+  }, []);
 
   const setZoom = useCallback(
     nextZoom => {
