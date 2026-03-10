@@ -37,7 +37,7 @@ export function AppShell() {
 
   return (
     <div className={`h-[100dvh] w-full overflow-hidden bg-neutral-950 text-neutral-50 flex flex-col ${!darkMode ? 'light-mode' : ''}`}>
-      <header className="border-b border-neutral-800 px-4 py-3 flex items-center justify-between shrink-0">
+      <header className="border-b border-neutral-800 px-3 md:px-4 py-2 md:py-3 flex items-center justify-between shrink-0">
         <div>
           <div className="font-semibold tracking-tight text-lg">
             PonSarYay
@@ -115,7 +115,7 @@ export function AppShell() {
               </button>
             ))}
           </div>
-          <div className="bg-neutral-950 border-t border-neutral-800 p-3 h-[28vh] min-h-[150px] overflow-y-auto overscroll-contain">
+          <div className="bg-neutral-950 border-t border-neutral-800 p-2 h-[22vh] min-h-[120px] overflow-y-auto overscroll-contain">
             {activeMobileTab === 'text' && <TextControls canvasApi={canvasApi} />}
             {activeMobileTab === 'fonts' && (
               <FontPicker

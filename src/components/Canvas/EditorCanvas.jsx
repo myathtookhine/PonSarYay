@@ -25,7 +25,7 @@ export function EditorCanvas({ canvasApi }) {
   }, [canvasApi]);
 
   return (
-    <div className="flex-1 flex flex-col items-center justify-center bg-neutral-950 p-3 min-h-[50dvh] md:min-h-0 overflow-hidden">
+    <div className="flex-1 flex flex-col items-center justify-center bg-neutral-950 p-1.5 md:p-3 min-h-0 overflow-hidden">
       <div className="relative w-full h-full max-w-4xl max-h-[80vh] border border-neutral-800 canvas-grid-bg flex items-center justify-center overflow-hidden">
         {!canvasApi.hasImage && (
           <div className="absolute inset-4 z-10 flex items-center justify-center pointer-events-auto">

@@ -47,12 +47,13 @@ export function TextControls({ canvasApi }) {
   };
 
   return (
-    <div className="space-y-3 text-xs">
-      <div className="font-semibold text-sm mb-1">Text controls</div>
+    <div className="space-y-2 text-xs">
+      <div className="font-semibold text-xs md:text-sm mb-0.5">Text controls</div>
 
-      <div className="space-y-1">
+      {/* Font size */}
+      <div className="space-y-0.5">
         <div className="text-[11px] text-neutral-300">Font size</div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <input
             type="range"
             min="8"
@@ -65,7 +66,7 @@ export function TextControls({ canvasApi }) {
             <button 
               type="button" 
               onClick={handleDecFontSize} 
-              className="w-6 h-[26px] flex items-center justify-center text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-l-md border-r border-neutral-700 pb-0.5"
+              className="w-6 h-[24px] flex items-center justify-center text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-l-md border-r border-neutral-700 pb-0.5"
             >
               -
             </button>
@@ -75,21 +76,23 @@ export function TextControls({ canvasApi }) {
               max="200"
               value={fontSize}
               onChange={e => setFontSize(e.target.value)}
-              className="w-12 bg-transparent text-center text-xs outline-none hide-spin-button"
+              className="w-10 md:w-12 bg-transparent text-center text-xs outline-none hide-spin-button"
             />
             <button 
               type="button" 
               onClick={handleIncFontSize} 
-              className="w-6 h-[26px] flex items-center justify-center text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-r-md border-l border-neutral-700 pb-0.5"
+              className="w-6 h-[24px] flex items-center justify-center text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-r-md border-l border-neutral-700 pb-0.5"
             >
               +
             </button>
           </div>
         </div>
       </div>
-      <div className="space-y-1">
+
+      {/* Line height */}
+      <div className="space-y-0.5">
         <div className="text-[11px] text-neutral-300">Line height</div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <input
             type="range"
             min="0.5"
@@ -99,40 +102,43 @@ export function TextControls({ canvasApi }) {
             onChange={e => setLineHeight(parseFloat(e.target.value))}
             className="flex-1"
           />
-          <div className="w-10 text-right">{lineHeight.toFixed(1)}</div>
+          <div className="w-8 md:w-10 text-right">{lineHeight.toFixed(1)}</div>
         </div>
       </div>
 
       <ColorPicker label="Text color" value={color} onChange={setColor} />
 
-      <div className="space-y-1">
-        <div className="text-[11px] text-neutral-300">Alignment</div>
-        <div className="flex gap-1">
-          {['left', 'center', 'right'].map(option => (
-            <button
-              key={option}
-              type="button"
-              onClick={() => setAlign(option)}
-              className={`flex-1 rounded-md border px-2 py-1 capitalize ${
-                align === option
-                  ? 'border-orange-500 bg-neutral-900'
-                  : 'border-neutral-700 bg-neutral-950'
-              }`}
-            >
-              {option}
-            </button>
-          ))}
+      {/* Alignment & Style side by side on mobile */}
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-1 md:gap-0 md:space-y-2">
+        <div className="space-y-0.5">
+          <div className="text-[11px] text-neutral-300">Alignment</div>
+          <div className="flex gap-1">
+            {['left', 'center', 'right'].map(option => (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setAlign(option)}
+                className={`flex-1 rounded-md border px-1.5 py-0.5 md:px-2 md:py-1 capitalize text-[10px] md:text-xs ${
+                  align === option
+                    ? 'border-orange-500 bg-neutral-900'
+                    : 'border-neutral-700 bg-neutral-950'
+                }`}
+              >
+                {option}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="space-y-0.5">
+          <div className="text-[11px] text-neutral-300">Style</div>
+          <TextStyleButtons value={styles} onChange={setStyles} />
         </div>
       </div>
 
-      <div className="space-y-1">
-        <div className="text-[11px] text-neutral-300">Style</div>
-        <TextStyleButtons value={styles} onChange={setStyles} />
-      </div>
-
-      <div className="space-y-1">
+      <div className="space-y-0.5">
         <div className="text-[11px] text-neutral-300">Opacity</div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <input
             type="range"
             min="0"

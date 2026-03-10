@@ -21,22 +21,22 @@ export function FontPicker({ selectedFontId, onFontChange }) {
   }, [encodingFilter, query]);
 
   return (
-    <div className="flex flex-col gap-2 text-xs">
-      <div className="font-semibold text-sm">Fonts</div>
+    <div className="flex flex-col gap-1.5 md:gap-2 text-xs">
+      <div className="font-semibold text-xs md:text-sm">Fonts</div>
       <input
         type="text"
         value={query}
         onChange={e => setQuery(e.target.value)}
         placeholder="Search fonts…"
-        className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-2 py-1 text-xs outline-none focus:border-orange-500"
+        className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-2 py-0.5 md:py-1 text-xs outline-none focus:border-orange-500"
       />
-      <div className="flex gap-1 mt-1">
+      <div className="flex gap-1 mt-0.5">
         {ENCODING_TABS.map(tab => (
           <button
             key={tab}
             type="button"
             onClick={() => setEncodingFilter(tab)}
-            className={`flex-1 rounded-full px-2 py-1 capitalize ${
+            className={`flex-1 rounded-full px-2 py-0.5 md:py-1 capitalize ${
               encodingFilter === tab
                 ? 'bg-orange-600 text-white'
                 : 'bg-neutral-900 text-neutral-300 border border-neutral-700'
@@ -46,7 +46,7 @@ export function FontPicker({ selectedFontId, onFontChange }) {
           </button>
         ))}
       </div>
-      <div className="grid grid-cols-1 gap-2 mt-2">
+      <div className="grid grid-cols-1 gap-1.5 md:gap-2 mt-1 md:mt-2">
         {fonts.map(font => (
           <FontPreviewCard
             key={font.id}
