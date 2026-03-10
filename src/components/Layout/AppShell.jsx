@@ -74,7 +74,7 @@ export function AppShell() {
           <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
             <EditorCanvas canvasApi={canvasApi} />
           </div>
-          <div className="border-t border-neutral-800">
+          <div className="border-t border-neutral-800 shrink-0">
             <CanvasToolbar
               canvasApi={canvasApi}
               onOpenCrop={() => setIsCropOpen(true)}
@@ -115,7 +115,7 @@ export function AppShell() {
               </button>
             ))}
           </div>
-          <div className="bg-neutral-950 border-t border-neutral-800 p-3 h-[38vh] min-h-[180px] overflow-y-auto overscroll-contain">
+          <div className="bg-neutral-950 border-t border-neutral-800 p-3 h-[28vh] min-h-[150px] overflow-y-auto overscroll-contain">
             {activeMobileTab === 'text' && <TextControls canvasApi={canvasApi} />}
             {activeMobileTab === 'fonts' && (
               <FontPicker

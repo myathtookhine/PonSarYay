@@ -42,7 +42,7 @@ export function CanvasToolbar({ canvasApi, onOpenCrop, showToast }) {
   );
 
   return (
-    <div className="flex flex-col gap-3 px-3 py-3 bg-neutral-950">
+    <div className="flex flex-col gap-2 px-3 py-2 bg-neutral-950">
       <div className="flex items-center gap-2 w-full overflow-x-auto hide-scrollbar">
         <span className="text-xs text-neutral-400 whitespace-nowrap mr-auto">Note : 300 Max. Characters</span>
         {renderUndoRedoCrop('md:hidden')}
@@ -83,7 +83,7 @@ export function CanvasToolbar({ canvasApi, onOpenCrop, showToast }) {
           title="Clear Image"
         >
           <Eraser size={18} />
-          <span className='ml-1'>Clear Image</span>
+          <span className='ml-2 text-sm whitespace-nowrap font-medium'>Clear Image</span>
         </button>
       </div>
     </div>
