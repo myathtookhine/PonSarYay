@@ -19,7 +19,7 @@ export function AppShell() {
   const [isCropOpen, setIsCropOpen] = useState(false);
   const [toast, setToast] = useState(null);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
-  const [darkMode, setDarkMode] = useState(true);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 1024);

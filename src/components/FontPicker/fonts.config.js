@@ -10,8 +10,12 @@ import MyanmarPhiksel from '../../assets/fonts/MyanmarPhiksel.ttf';
 import MyanmarSansPro from '../../assets/fonts/MyanmarSansPro.ttf';
 import MyanmarSquare from '../../assets/fonts/MyanmarSquare.ttf';
 import MyanmarSquareLight from '../../assets/fonts/MyanmarSquareLight.ttf';
+import PyidaungsuBold from '../../assets/fonts/PyidaungsuBold.ttf';
+import PyidaungsuRegular from '../../assets/fonts/PyidaungsuRegular.ttf';  
 
 export const MYANMAR_FONTS = [
+  { id: 'PyidaungsuRegular', name: 'PyidaungsuRegular', file: PyidaungsuRegular, previewText: 'လက်ရေးလှလှရေးကြမယ်', category: 'myanmar' },
+  { id: 'PyidaungsuBold', name: 'PyidaungsuBold', file: PyidaungsuBold, previewText: 'လက်ရေးလှလှရေးကြမယ်', category: 'myanmar' },
   { id: 'myanmar-gantgaw', name: 'MyanmarGantgaw', file: MyanmarGantgawFont, previewText: 'လက်ရေးလှလှရေးကြမယ်', category: 'myanmar' },
   { id: 'MyanmarSabae', name: 'MyanmarSabae', file: MyanmarSabaeFont, previewText: 'လက်ရေးလှလှရေးကြမယ်', category: 'myanmar' },
   { id: 'MasterpieceUniHand', name: 'MasterpieceUniHand', file: MasterpieceUniHandFont, previewText: 'လက်ရေးလှလှရေးကြမယ်', category: 'myanmar' },

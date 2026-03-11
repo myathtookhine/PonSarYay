@@ -47,7 +47,7 @@ export function useCanvas() {
     if (!json) return;
     history.current.undo.push(json);
     history.current.redo = [];
-    setCanUndo(history.current.undo.length > 0);
+    setCanUndo(history.current.undo.length > 1);
     setCanRedo(false);
   }, []);
 
@@ -147,6 +147,8 @@ export function useCanvas() {
       canvas.set('backgroundImage', fabricImage);
       canvas.renderAll();
       setHasImage(true);
+      
+      history.current = { undo: [], redo: [] };
       saveHistory();
     },
     [positionBackgroundImage, saveHistory],
@@ -242,16 +244,21 @@ export function useCanvas() {
 
   const undo = useCallback(async () => {
     const canvas = canvasRef.current;
-    if (!canvas || history.current.undo.length === 0) return;
-    const current = canvas.toJSON();
-    const last = history.current.undo.pop();
-    if (!last) return;
+    if (!canvas || history.current.undo.length <= 1) return;
+    
+    // The current state is the top of the undo stack
+    const current = history.current.undo.pop();
+    if (!current) return;
     history.current.redo.push(current);
     
+    // The previous state is now the new top of the undo stack
+    const previous = history.current.undo[history.current.undo.length - 1];
+    if (!previous) return;
+    
     try {
-      await canvas.loadFromJSON(last);
+      await canvas.loadFromJSON(previous);
       canvas.renderAll();
-      setCanUndo(history.current.undo.length > 0);
+      setCanUndo(history.current.undo.length > 1);
       setCanRedo(history.current.redo.length > 0);
     } catch (error) {
       console.error('Error undoing:', error);
@@ -261,15 +268,15 @@ export function useCanvas() {
   const redo = useCallback(async () => {
     const canvas = canvasRef.current;
     if (!canvas || history.current.redo.length === 0) return;
-    const current = canvas.toJSON();
+    
     const next = history.current.redo.pop();
     if (!next) return;
-    history.current.undo.push(current);
+    history.current.undo.push(next);
     
     try {
       await canvas.loadFromJSON(next);
       canvas.renderAll();
-      setCanUndo(history.current.undo.length > 0);
+      setCanUndo(history.current.undo.length > 1);
       setCanRedo(history.current.redo.length > 0);
     } catch (error) {
       console.error('Error redoing:', error);
@@ -346,9 +353,8 @@ export function useCanvas() {
     canvas.renderAll();
     setHasImage(false);
     history.current = { undo: [], redo: [] };
-    setCanUndo(false);
-    setCanRedo(false);
-  }, []);
+    saveHistory();
+  }, [saveHistory]);
 
   const setZoom = useCallback(
     nextZoom => {

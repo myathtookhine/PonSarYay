@@ -7,7 +7,7 @@ export function CropModal({ isOpen, onClose, canvasApi }) {
   const { t } = useLanguage();
   const [src, setSrc] = useState(null);
   const [crop, setCrop] = useState({ unit: '%', x: 10, y: 10, width: 80, height: 80 });
-  const [completedCrop, setCompletedCrop] = useState(null);
+  const [completedCrop, setCompletedCrop] = useState({ unit: '%', x: 10, y: 10, width: 80, height: 80 });
   const imgRef = useRef(null);
 
   useEffect(() => {

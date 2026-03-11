@@ -25,13 +25,13 @@ export function FontPicker({ selectedFontId, onFontChange }) {
   return (
     <div className="flex flex-col gap-1.5 md:gap-2 text-xs">
       <div className="font-semibold text-xs md:text-sm">{t('fonts')}</div>
-      <input
+      {/* <input
         type="text"
         value={query}
         onChange={e => setQuery(e.target.value)}
         placeholder={t('search fonts...')}
         className="w-full rounded-md bg-neutral-900 border border-neutral-700 px-2 py-0.5 md:py-1 text-xs outline-none focus:border-orange-500"
-      />
+      /> */}
       <div className="flex gap-1 mt-0.5">
         {ENCODING_TABS.map(tab => (
           <button

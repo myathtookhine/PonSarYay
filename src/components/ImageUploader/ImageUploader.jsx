@@ -40,8 +40,8 @@ export function ImageUploader({ onImageLoaded }) {
 
   return (
     <div
-      className={`border rounded-md p-4 py-12 flex flex-col items-center text-xs cursor-pointer ${
-        isDragging ? 'border-orange-500 bg-neutral-900' : 'border-neutral-700 bg-neutral-950'
+      className={`w-full h-full flex flex-col items-center justify-center text-xs cursor-pointer transition-colors ${
+        isDragging ? 'bg-orange-500/10' : 'bg-transparent'
       }`}
       onClick={() => inputRef.current?.click()}
       onDrop={onDrop}

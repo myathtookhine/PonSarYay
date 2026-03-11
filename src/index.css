@@ -50,8 +50,8 @@
   font-display: swap;
 }
 @font-face {
-  font-family: 'Myanmar Sans Pro';
-  src: url('./assets/fonts/MyanmarSansPro.ttf') format('truetype');
+  font-family: 'Pyidaungsu';
+    src: url('./assets/fonts/PyidaungsuRegular.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -72,7 +72,7 @@ body {
 }
 
 body.lang-my {
-  font-family: 'Myanmar Sans Pro', 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Pyidaungsu', 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* Grid background for canvas area */
