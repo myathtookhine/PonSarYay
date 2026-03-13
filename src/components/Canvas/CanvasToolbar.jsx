@@ -6,7 +6,7 @@ export function CanvasToolbar({ canvasApi, onOpenCrop, showToast }) {
   const { t } = useLanguage();
   const handleAddText = () => {
     if (!canvasApi.hasImage) {
-      showToast?.(t('please upload an image first.'));
+      canvasApi.setUploadError(t('please upload an image first.'));
       return;
     }
     canvasApi.addTextLayer();

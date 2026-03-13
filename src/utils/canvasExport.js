@@ -1,5 +1,8 @@
-export function exportCanvas(canvas, format = 'png', quality = 0.92, multiplier = 1) {
+import { isInAppBrowser } from './browserUtils.js';
+
+export function exportCanvas(canvas, format = 'png', quality = 0.92, multiplier = 1, filename, triggerDownload = true) {
   const options = { format, quality, multiplier };
+  const downloadName = filename ? `${filename}.${format}` : `edited-image.${format}`;
 
   // Crop export to just the background image area (remove extra canvas padding)
   if (canvas.backgroundImage) {
@@ -28,9 +31,9 @@ export function exportCanvas(canvas, format = 'png', quality = 0.92, multiplier 
   }
 
   const dataURL = canvas.toDataURL(options);
+  let blobUrl = null;
 
   try {
-    // Convert base64 data to Blob to avoid long data URI limits on mobile browsers
     const byteString = atob(dataURL.split(',')[1]);
     const mimeString = dataURL.split(',')[0].split(':')[1].split(';')[0];
     const ab = new ArrayBuffer(byteString.length);
@@ -41,28 +44,32 @@ export function exportCanvas(canvas, format = 'png', quality = 0.92, multiplier 
     }
     
     const blob = new Blob([ab], { type: mimeString });
-    const blobUrl = URL.createObjectURL(blob);
+    blobUrl = URL.createObjectURL(blob);
 
     const link = document.createElement('a');
-    link.download = `edited-image.${format}`;
+    link.download = downloadName;
     link.href = blobUrl;
     
-    document.body.appendChild(link); // Required for some mobile browsers
-    link.click();
+    document.body.appendChild(link);
+    if (!isInAppBrowser() && triggerDownload) {
+      link.click();
+    }
     document.body.removeChild(link);
     
-    // Clean up
     setTimeout(() => {
       URL.revokeObjectURL(blobUrl);
-    }, 1000);
-    
+    }, 10000); // Wait longer for the download to start
+
+    return blobUrl;
   } catch (error) {
     console.error("Failed to download image from blob, falling back to data URL:", error);
-    // Fallback if Blob creation fails for some reason
     const link = document.createElement('a');
-    link.download = `edited-image.${format}`;
+    link.download = downloadName;
     link.href = dataURL;
-    link.click();
+    if (!isInAppBrowser() && triggerDownload) {
+      link.click();
+    }
+    return dataURL;
   }
 }
 

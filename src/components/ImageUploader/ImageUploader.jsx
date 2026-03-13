@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import { Image as ImageIcon } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
 
-export function ImageUploader({ onImageLoaded }) {
+export function ImageUploader({ onImageLoaded, errorMessage }) {
   const { t } = useLanguage();
   const inputRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -48,13 +48,21 @@ export function ImageUploader({ onImageLoaded }) {
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
     >
-      <div className="w-16 h-16 mb-4 rounded-full bg-orange-600 flex items-center justify-center text-white">
+      <div className="w-16 h-16 mb-4 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
         <ImageIcon size={32} />
       </div>
-      <div className="font-bold mb-3 text-xl">{t('upload image')}</div>
-      <div className="text-neutral-400 text-center max-w-[250px] mt-2">
-        {t('click to dropzone')}
-      </div>
+      <div className="font-bold mb-1 text-xl">{t('upload image')}</div>
+
+      {errorMessage ? (
+        <div className="text-red-500 font-semibold text-xs mb-2 animate-in fade-in slide-in-from-top-1 px-4 text-center mt-4">
+          {errorMessage}
+        </div>
+      ) : (
+        <div className="text-neutral-400 text-center max-w-[250px] mt-2 px-4">
+          {t('click to dropzone')}
+        </div>
+      )}
+
       <input
         ref={inputRef}
         type="file"

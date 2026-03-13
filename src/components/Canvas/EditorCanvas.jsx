@@ -29,7 +29,7 @@ export function EditorCanvas({ canvasApi }) {
       <div className="relative w-full h-full max-w-4xl max-h-[80vh] border border-neutral-800 canvas-grid-bg flex items-center justify-center overflow-hidden">
         {!canvasApi.hasImage && (
           <div className="absolute inset-0 z-10 w-full h-full pointer-events-auto">
-            <ImageUploader onImageLoaded={canvasApi.loadImage} />
+            <ImageUploader onImageLoaded={canvasApi.loadImage} errorMessage={canvasApi.uploadError} />
           </div>
         )}
         <div ref={containerRef} className="w-full h-full touch-none block" />

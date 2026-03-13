@@ -55,7 +55,18 @@ const translations = {
     "crop image": "Crop image",
     "upload an image first for crop": "Upload an image first, then open the crop tool.",
     "cancel": "Cancel",
-    "apply crop": "Apply crop"
+    "apply crop": "Apply crop",
+    "save image": "Save Image",
+    "messenger_save_instruction": "Long press the image above and select \"Save Image\" to download it.",
+    "in_app_browser_warning": "Some in-app browsers (like Messenger) block direct downloads. Using long-press is the most reliable way.",
+    "download_again": "Download Again",
+    "download_image": "Download Image",
+    "image name": "Image Name",
+    "please enter image name": "Please enter image name",
+    "preview_before_download_hint": "A preview will open before saving.",
+    "resolution_notice": "Use 3x for high resolution images.",
+    "ok": "OK",
+    "notice": "Notice"
   },
   my: {
     "all": "အားလုံး",
@@ -111,7 +122,18 @@ const translations = {
     "crop image": "ပုံဖြတ်ရန်",
     "upload an image first for crop": "ပုံအရင်တင်ပြီးမှ ပုံဖြတ်ကိရိယာကိုဖွင့်ပါ။",
     "cancel": "ပယ်ဖျက်မည်",
-    "apply crop": "ဖြတ်မည်"
+    "apply crop": "ဖြတ်မည်",
+    "save image": "ပုံသိမ်းမည်",
+    "messenger_save_instruction": "ပုံကိုအကြာကြီးဖိထားပြီး \"Save Image\" (သို့မဟုတ်) \"ပုံသိမ်းမည်\" ကိုနှိပ်၍ သိမ်းဆည်းပါ။",
+    "in_app_browser_warning": "Messenger ကဲ့သို့သော App များတွင် ပုံတိုက်ရိုက်ဒေါင်းလုဒ်ဆွဲခြင်းကို ပိတ်ပင်ထားတတ်ပါသည်။ ပုံကိုဖိထားပြီးသိမ်းခြင်းက အဆင်ပြေဆုံးဖြစ်ပါသည်။",
+    "download_again": "ထပ်မံဒေါင်းလုဒ်ဆွဲမည်",
+    "download_image": "ပုံကိုဒေါင်းလုပ်ဆွဲမည်",
+    "image name": "ပုံအမည်",
+    "please enter image name": "ကျေးဇူးပြု၍ ပုံအမည်ထည့်ပါ",
+    "preview_before_download_hint": "မသိမ်းခင် ပုံကို အစမ်းကြည့်ရှုနိုင်မည် ဖြစ်ပါသည်။",
+    "resolution_notice": "ကြည်လင်ပြတ်သားသောပုံရရန် 3x ကို အသုံးပြုပါ။",
+    "ok": "အိုကေ",
+    "notice": "သတိပေးချက်"
   }
 };
 

@@ -15,6 +15,7 @@ export function useCanvas() {
   const history = useRef({ undo: [], redo: [] });
   const [selectedFontId, setSelectedFontId] = useState(null);
   const [hasImage, setHasImage] = useState(false);
+  const [uploadError, setUploadError] = useState(null);
   const zoomRef = useRef(1);
   const showToastRef = useRef(null);
 
@@ -147,6 +148,7 @@ export function useCanvas() {
       canvas.set('backgroundImage', fabricImage);
       canvas.renderAll();
       setHasImage(true);
+      setUploadError(null);
       
       history.current = { undo: [], redo: [] };
       saveHistory();
@@ -284,10 +286,10 @@ export function useCanvas() {
   }, []);
 
   const exportAs = useCallback(
-    (format = 'png', quality = 0.92, multiplier = 1) => {
+    (format = 'png', quality = 0.92, multiplier = 1, filename, triggerDownload = true) => {
       const canvas = canvasRef.current;
-      if (!canvas) return;
-      exportCanvas(canvas, format, quality, multiplier);
+      if (!canvas) return null;
+      return exportCanvas(canvas, format, quality, multiplier, filename, triggerDownload);
     },
     [],
   );
@@ -352,6 +354,7 @@ export function useCanvas() {
     canvas.backgroundColor = 'transparent';
     canvas.renderAll();
     setHasImage(false);
+    setUploadError(null);
     history.current = { undo: [], redo: [] };
     saveHistory();
   }, [saveHistory]);
@@ -404,6 +407,8 @@ export function useCanvas() {
     zoomOut,
     resetZoom,
     setShowToast,
+    uploadError,
+    setUploadError,
   };
 }
 

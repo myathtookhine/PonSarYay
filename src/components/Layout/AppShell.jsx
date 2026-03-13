@@ -129,7 +129,7 @@ export function AppShell() {
               </button>
             ))}
           </div>
-          <div className="bg-neutral-950 border-t border-neutral-800 p-2 h-[22vh] min-h-[120px] overflow-y-auto overscroll-contain">
+          <div className="bg-neutral-950 border-t border-neutral-800 p-2 h-[28vh] min-h-[160px] overflow-y-auto overscroll-contain">
             {activeMobileTab === 'text controls' && <TextControls canvasApi={canvasApi} />}
             {activeMobileTab === 'fonts' && (
               <FontPicker
