@@ -108,7 +108,7 @@ const translations = {
     "blur": "ဝေဝါးမှု",
     "offset x": "ဝင်ရိုး X ရွှေ့ရန်",
     "offset y": "ဝင်ရိုး Y ရွှေ့ရန်",
-    "myanmar text-on-image editor": "မြန်မာစာလက်ရေးလှ ပုံစာရေးတည်းဖြတ်ကိရိယာ",
+    "myanmar text-on-image editor": "ဖောင့်အလှပုံစာရေးတည်းဖြတ်ကိရိယာ",
     "click to dropzone": "ဖိုင်ရွေးရန်နှိပ်ပါ သို့မဟုတ် ပုံတစ်ပုံဆွဲချပါ",
     "format": "ပုံအမျိုးအစား",
     "quality": "အရည်အသွေး",
