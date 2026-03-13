@@ -40,12 +40,15 @@ export function AppShell() {
   return (
     <div className={`h-[100dvh] w-full overflow-hidden bg-neutral-950 text-neutral-50 flex flex-col ${!darkMode ? 'light-mode' : ''}`}>
       <header className="border-b border-neutral-800 px-3 md:px-4 py-2 md:py-3 flex items-center justify-between shrink-0">
-        <div>
-          <div className="font-bold uppercase tracking-tight text-lg">
-            Pon-Sar-Yay
-          </div>
-          <div className="text-xs text-neutral-400">
-            {t('myanmar text-on-image editor')}
+        <div className="flex items-center gap-3">
+          <img src="/ponsaryay.png" alt="Pon-Sar-Yay Logo" className="w-10 h-10 object-contain rounded-md" />
+          <div className="flex flex-col justify-center">
+            <div className="font-bold uppercase tracking-tight text-lg leading-none mb-0.5">
+              Pon-Sar-Yay
+            </div>
+            <div className="text-[10px] text-neutral-400 leading-none">
+              {t('myanmar text-on-image editor')}
+            </div>
           </div>
         </div>
         <div className="flex items-center gap-2 md:gap-3">
