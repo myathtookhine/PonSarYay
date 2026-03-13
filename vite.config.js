@@ -1,10 +1,18 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { compression } from 'vite-plugin-compression2';
 
+// https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    compression({ algorithm: 'gzip' })
+  ],
   server: {
     port: 5173,
+  },
+  esbuild: {
+    drop: ['console', 'debugger'],
   },
   build: {
     chunkSizeWarningLimit: 1600,
