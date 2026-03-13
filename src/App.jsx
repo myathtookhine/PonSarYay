@@ -1,8 +1,12 @@
 import React from 'react';
 import { AppShell } from './components/Layout/AppShell.jsx';
+import { Analytics } from '@vercel/analytics';
 
 function App() {
-  return <AppShell />;
+  return <>
+    <AppShell />
+    <Analytics />
+  </>;
 }
 
 export default App;
