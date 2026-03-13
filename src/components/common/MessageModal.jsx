@@ -31,7 +31,7 @@ export function MessageModal({ isOpen, onClose, title, message, type = 'info' })
           </p>
         </div>
 
-        <div className="p-3 border-t border-neutral-800flex flex-col">
+        <div className="p-3 border-t border-neutral-800 flex flex-col">
           <button
             onClick={onClose}
             className="w-full py-2.5 text-sm font-semibold bg-orange-600 hover:bg-orange-500 text-white rounded-md transition-all shadow-lg active:scale-[0.98]"

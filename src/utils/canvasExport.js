@@ -5,8 +5,8 @@ export function exportCanvas(canvas, format = 'png', quality = 0.92, multiplier 
   const downloadName = filename ? `${filename}.${format}` : `edited-image.${format}`;
 
   // Crop export to just the background image area (remove extra canvas padding)
-  if (canvas.backgroundImage) {
-    const bg = canvas.backgroundImage;
+  const bg = canvas.getObjects().find(obj => obj.isBackground);
+  if (bg) {
     const bgWidth = (bg.width || 0) * (bg.scaleX || 1);
     const bgHeight = (bg.height || 0) * (bg.scaleY || 1);
 

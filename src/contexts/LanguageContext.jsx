@@ -66,7 +66,8 @@ const translations = {
     "preview_before_download_hint": "A preview will open before saving.",
     "resolution_notice": "Use 3x for high resolution images.",
     "ok": "OK",
-    "notice": "Notice"
+    "notice": "Notice",
+    "uploading...": "Uploading..."
   },
   my: {
     "all": "အားလုံး",
@@ -133,7 +134,8 @@ const translations = {
     "preview_before_download_hint": "မသိမ်းခင် ပုံကို အစမ်းကြည့်ရှုနိုင်မည် ဖြစ်ပါသည်။",
     "resolution_notice": "ကြည်လင်ပြတ်သားသောပုံရရန် 3x ကို အသုံးပြုပါ။",
     "ok": "အိုကေ",
-    "notice": "သတိပေးချက်"
+    "notice": "သတိပေးချက်",
+    "uploading...": "တင်နေသည်..."
   }
 };
 

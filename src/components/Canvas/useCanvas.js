@@ -16,6 +16,7 @@ export function useCanvas() {
   const [selectedFontId, setSelectedFontId] = useState(null);
   const [hasImage, setHasImage] = useState(false);
   const [uploadError, setUploadError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const zoomRef = useRef(1);
   const showToastRef = useRef(null);
 
@@ -136,22 +137,41 @@ export function useCanvas() {
 
   const loadImage = useCallback(
     async file => {
-      const canvas = canvasRef.current;
-      if (!canvas || !file) return;
-      const baseImage = await createObjectUrlImage(file);
-      const resized = await resizeImageToMax(baseImage, MAX_CANVAS_SIZE);
-
-      const fabricImage = new FabricImage(resized);
-      positionBackgroundImage(canvas, fabricImage);
-
-      canvas.clear();
-      canvas.set('backgroundImage', fabricImage);
-      canvas.renderAll();
-      setHasImage(true);
-      setUploadError(null);
+      if (!file) return;
+      setIsLoading(true);
       
-      history.current = { undo: [], redo: [] };
-      saveHistory();
+      try {
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const baseImage = await createObjectUrlImage(file);
+        const resized = await resizeImageToMax(baseImage, MAX_CANVAS_SIZE);
+
+        const fabricImage = new FabricImage(resized, {
+          isBackground: true,
+          selectable: false,
+          evented: false,
+          hoverCursor: 'default'
+        });
+        positionBackgroundImage(canvas, fabricImage);
+
+        canvas.clear();
+        canvas.add(fabricImage);
+        canvas.sendObjectToBack(fabricImage);
+        
+        canvas.requestRenderAll();
+        
+        setHasImage(true);
+        setUploadError(null);
+        
+        history.current = { undo: [], redo: [] };
+        saveHistory();
+      } catch (err) {
+        console.error("Error loading image:", err);
+        setUploadError("Error loading image. Please try another one.");
+      } finally {
+        setIsLoading(false);
+      }
     },
     [positionBackgroundImage, saveHistory],
   );
@@ -303,12 +323,12 @@ export function useCanvas() {
   const getBackgroundImageDataUrl = useCallback(() => {
     return new Promise((resolve) => {
       const canvas = canvasRef.current;
-      if (!canvas || !canvas.backgroundImage) return resolve(null);
+      if (!canvas) return resolve(null);
 
-      const element =
-        typeof canvas.backgroundImage.getElement === 'function'
-          ? canvas.backgroundImage.getElement()
-          : canvas.backgroundImage._element;
+      const bg = canvas.getObjects().find(obj => obj.isBackground);
+      if (!bg) return resolve(null);
+
+      const element = bg.getElement();
       if (!element) return resolve(null);
 
       const width = element.naturalWidth || element.width;
@@ -335,10 +355,19 @@ export function useCanvas() {
       image.onload = () => {
         const canvas = canvasRef.current;
         if (!canvas) return;
-        const fabricImage = new FabricImage(image);
+        const fabricImage = new FabricImage(image, {
+          isBackground: true,
+          selectable: false,
+          evented: false,
+          hoverCursor: 'default'
+        });
         positionBackgroundImage(canvas, fabricImage);
-        canvas.set('backgroundImage', fabricImage);
-        canvas.renderAll();
+        
+        canvas.clear();
+        canvas.add(fabricImage);
+        canvas.sendObjectToBack(fabricImage);
+        
+        canvas.requestRenderAll();
         setHasImage(true);
         saveHistory();
       };
@@ -409,6 +438,7 @@ export function useCanvas() {
     setShowToast,
     uploadError,
     setUploadError,
+    isLoading,
   };
 }
 
