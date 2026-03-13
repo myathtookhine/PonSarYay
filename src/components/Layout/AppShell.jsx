@@ -41,8 +41,8 @@ export function AppShell() {
     <div className={`h-[100dvh] w-full overflow-hidden bg-neutral-950 text-neutral-50 flex flex-col ${!darkMode ? 'light-mode' : ''}`}>
       <header className="border-b border-neutral-800 px-3 md:px-4 py-2 md:py-3 flex items-center justify-between shrink-0">
         <div>
-          <div className="font-semibold tracking-tight text-lg">
-            PonSarYay
+          <div className="font-bold uppercase tracking-tight text-lg">
+            Pon-Sar-Yay
           </div>
           <div className="text-xs text-neutral-400">
             {t('myanmar text-on-image editor')}

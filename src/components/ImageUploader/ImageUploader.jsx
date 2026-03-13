@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { Image as ImageIcon } from 'lucide-react';
+import { AlertTriangle, Image as ImageIcon } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
 
 export function ImageUploader({ onImageLoaded, errorMessage }) {
@@ -54,8 +54,11 @@ export function ImageUploader({ onImageLoaded, errorMessage }) {
       <div className="font-bold mb-1 text-xl">{t('upload image')}</div>
 
       {errorMessage ? (
-        <div className="text-red-500 font-semibold text-xs mb-2 animate-in fade-in slide-in-from-top-1 px-4 text-center mt-4">
-          {errorMessage}
+        <div className="mt-4 mb-2 mx-4 w-auto rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-red-100 animate-in fade-in slide-in-from-top-1">
+          <div className="flex items-start gap-2">
+            <AlertTriangle size={16} className="mt-0.5 shrink-0 text-red-700" />
+            <p className="text-xs font-semibold leading-5 text-red-700">{errorMessage}</p>
+          </div>
         </div>
       ) : (
         <div className="text-neutral-400 text-center max-w-[250px] mt-2 px-4">

@@ -68,7 +68,7 @@ export function CropModal({ isOpen, onClose, canvasApi }) {
 
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/60 p-4">
-      <div className="w-full max-w-lg max-h-[90vh] flex flex-col rounded-lg bg-neutral-950 border border-neutral-800 p-4 text-xs">
+      <div className="w-full max-w-lg max-h-[95vh] flex flex-col rounded-lg bg-neutral-950 border border-neutral-800 p-4 text-xs">
         <div className="flex items-center justify-between mb-3 shrink-0">
           <div className="font-semibold text-sm">{t('crop image')}</div>
           <button

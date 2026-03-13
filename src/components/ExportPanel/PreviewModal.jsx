@@ -29,17 +29,14 @@ export function PreviewModal({ isOpen, onClose, imageUrl, filename }) {
             />
           </div>
           
-          <div className="text-center space-y-2">
+          <div className="lg:hidden text-center space-y-2">
             <p className="text-sm text-orange-400 font-medium px-4">
               {t('messenger_save_instruction') || 'Long press the image above and select "Save Image" to download it.'}
-            </p>
-            <p className="text-[11px] text-neutral-400 px-6">
-              {t('in_app_browser_warning') || 'Some in-app browsers (like Messenger) block direct downloads. Using long-press is the most reliable way.'}
             </p>
           </div>
         </div>
 
-        <div className="p-3 border-t border-neutral-800 flex gap-2">
+        <div className="hidden lg:flex p-3 border-t border-neutral-800 gap-2 shrink-0">
           <button
             onClick={onClose}
             className="flex-1 py-2 text-sm font-medium border border-neutral-700 hover:bg-neutral-800 rounded-md transition-colors"

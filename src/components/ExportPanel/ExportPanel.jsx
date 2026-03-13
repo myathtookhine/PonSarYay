@@ -36,19 +36,18 @@ export function ExportPanel({ canvasApi }) {
     <div className="space-y-2 md:space-y-3 text-xs">
       {/* <div className="font-bold text-xs md:text-sm text-orange-500 uppercase tracking-wider">{t('export')}</div> */}
 
-
       <div className="space-y-0.5 md:space-y-1">
-        <div className="text-[11px] text-neutral-300">{t('format')}</div>
+        <div className="text-[11px] text-neutral-300">{t("format")}</div>
         <div className="flex gap-1">
-          {['png', 'jpeg'].map(f => (
+          {["png", "jpeg"].map((f) => (
             <button
               key={f}
               type="button"
               onClick={() => setFormat(f)}
               className={`flex-1 rounded-md border px-2 py-0.5 md:py-1 uppercase ${
                 format === f
-                  ? 'border-orange-500 bg-neutral-900'
-                  : 'border-neutral-700 bg-neutral-950'
+                  ? "border-orange-500 bg-neutral-900"
+                  : "border-neutral-700 bg-neutral-950"
               }`}
             >
               {f}
@@ -57,9 +56,9 @@ export function ExportPanel({ canvasApi }) {
         </div>
       </div>
 
-      {format === 'jpeg' && (
+      {format === "jpeg" && (
         <div className="space-y-0.5 md:space-y-1">
-          <div className="text-[11px] text-neutral-300">{t('quality')}</div>
+          <div className="text-[11px] text-neutral-300">{t("quality")}</div>
           <div className="flex items-center gap-2">
             <input
               type="range"
@@ -67,7 +66,7 @@ export function ExportPanel({ canvasApi }) {
               max="1"
               step="0.02"
               value={quality}
-              onChange={e => setQuality(parseFloat(e.target.value))}
+              onChange={(e) => setQuality(parseFloat(e.target.value))}
               className="flex-1"
             />
             <div className="w-10 text-right">{Math.round(quality * 100)}%</div>
@@ -76,17 +75,17 @@ export function ExportPanel({ canvasApi }) {
       )}
 
       <div className="space-y-0.5 md:space-y-1">
-        <div className="text-[11px] text-neutral-300">{t('size')}</div>
+        <div className="text-[11px] text-neutral-300">{t("size")}</div>
         <div className="flex gap-1">
-          {[1, 2, 3].map(m => (
+          {[1, 2, 3].map((m) => (
             <button
               key={m}
               type="button"
               onClick={() => setMultiplier(m)}
               className={`flex-1 rounded-md border px-2 py-0.5 md:py-1 ${
                 multiplier === m
-                  ? 'border-orange-500 bg-neutral-900'
-                  : 'border-neutral-700 bg-neutral-950'
+                  ? "border-orange-500 bg-neutral-900"
+                  : "border-neutral-700 bg-neutral-950"
               }`}
             >
               {m}x
@@ -94,13 +93,13 @@ export function ExportPanel({ canvasApi }) {
           ))}
         </div>
         <p className="text-[10px] text-orange-400 mt-1 italic">
-          {t('resolution_notice')}
+          {t("resolution_notice")}
         </p>
       </div>
       <div className="space-y-1 p-2 rounded-lg border border-neutral-800">
         <div className="flex justify-between items-center">
           <label className="text-[11px] font-medium text-neutral-300">
-            {t('image name')} <span className="text-red-500">*</span>
+            {t("image name")} <span className="text-red-500">*</span>
           </label>
         </div>
         <input
@@ -109,11 +108,14 @@ export function ExportPanel({ canvasApi }) {
           value={imageName}
           onChange={(e) => {
             setImageName(e.target.value);
-            if (e.target.value.trim()) setError('');
+            if (e.target.value.trim()) setError("");
           }}
-          placeholder={t('please enter image name')}
-          className={`w-full rounded-md border px-2.5 py-2 bg-neutral-950 text-neutral-50 transition-all focus:outline-none focus:ring-1 text-xs ${error ? 'border-red-500 focus:ring-red-500 ring-red-500/20' : 'border-neutral-700 focus:ring-orange-500 focus:border-orange-500'
-            }`}
+          placeholder={t("please enter image name")}
+          className={`w-full rounded-md border px-2.5 py-2 bg-neutral-950 text-neutral-50 transition-all focus:outline-none focus:ring-1 text-xs ${
+            error
+              ? "border-red-500 focus:ring-red-500 ring-red-500/20"
+              : "border-neutral-700 focus:ring-orange-500 focus:border-orange-500"
+          }`}
         />
         {error && (
           <div className="flex items-center gap-1.5 mt-1 text-red-500 bg-red-500/10 p-1.5 rounded border border-red-500/20 animate-in fade-in slide-in-from-top-1">
@@ -127,13 +129,16 @@ export function ExportPanel({ canvasApi }) {
           {t('preview_before_download_hint') || "A preview will open before saving."}
         </p>
       </div> */}
-
+      <p className="text-[11px] text-neutral-400 mb-2">
+        {t("in_app_browser_warning") ||
+          "Some in-app browsers (like Messenger) block direct downloads. Using long-press is the most reliable way."}
+      </p>
       <button
         type="button"
         onClick={onExport}
         className="w-full mt-1 rounded-md bg-orange-600 text-sm py-2 md:py-3 font-semibold hover:bg-orange-500 transition-colors"
       >
-        {t('download image')}
+        {t("download image")}
       </button>
 
       <PreviewModal
@@ -146,8 +151,8 @@ export function ExportPanel({ canvasApi }) {
       <MessageModal
         isOpen={isErrorModalOpen}
         onClose={() => setIsErrorModalOpen(false)}
-        title={t('upload image')}
-        message={t('please upload an image first.')}
+        title={t("upload image")}
+        message={t("please upload an image first.")}
         type="warning"
       />
     </div>
