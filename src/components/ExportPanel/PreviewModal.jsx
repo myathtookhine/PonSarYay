@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
+import ReactGA from 'react-ga4';
 import { X, Download } from 'lucide-react';
 
 export function PreviewModal({ isOpen, onClose, imageUrl, filename }) {
@@ -46,6 +47,13 @@ export function PreviewModal({ isOpen, onClose, imageUrl, filename }) {
           <a
             href={imageUrl}
             download={filename ? `${filename}.png` : "edited-image.png"}
+            onClick={() => {
+              ReactGA.event({
+                category: "User_Action",
+                action: "image_download_click",
+                label: filename || "edited-image",
+              });
+            }}
             className="flex-1 py-2 text-sm font-medium text-white bg-orange-600 hover:bg-orange-500 rounded-md transition-colors flex items-center justify-center gap-2"
           >
             <Download size={16} />

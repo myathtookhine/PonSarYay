@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
 import { isInAppBrowser } from '../../utils/browserUtils.js';
+import ReactGA from 'react-ga4';
 import { PreviewModal } from './PreviewModal.jsx';
 import { MessageModal } from '../common/MessageModal.jsx';
 
@@ -26,6 +27,15 @@ export function ExportPanel({ canvasApi }) {
       return;
     }
     setError('');
+
+    // Google Analytics Event for Image Export
+    ReactGA.event({
+      category: "User_Action",
+      action: "image_export",
+      label: format,
+      value: multiplier,
+    });
+
     const url = await canvasApi.exportAs(format, quality, multiplier, imageName.trim(), false);
 
     setPreviewUrl(url);
