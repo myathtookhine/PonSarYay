@@ -40,7 +40,7 @@ export function EditorCanvas({ canvasApi }) {
           <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm">
             <div className="flex flex-col items-center justify-center p-6 bg-neutral-900 rounded-2xl border border-neutral-700 shadow-2xl">
               <Loader2 className="w-10 h-10 text-orange-500 animate-spin mb-3" />
-              <div className="text-xs font-bold text-white uppercase tracking-widest whitespace-nowrap">
+              <div className="text-xs font-bold text-gray-600 uppercase tracking-widest whitespace-nowrap">
                 {t('uploading...')}
               </div>
             </div>
