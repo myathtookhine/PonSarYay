@@ -9,7 +9,7 @@ export function ExportPanel({ canvasApi }) {
   const { t } = useLanguage();
   const [format, setFormat] = useState('png');
   const [quality, setQuality] = useState(0.92);
-  const [multiplier, setMultiplier] = useState(1);
+  const [multiplier, setMultiplier] = useState(2);
   const [previewUrl, setPreviewUrl] = useState(null);
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
@@ -139,7 +139,7 @@ export function ExportPanel({ canvasApi }) {
           {t('preview_before_download_hint') || "A preview will open before saving."}
         </p>
       </div> */}
-      <p className="text-[11px] text-neutral-400 mb-2">
+      <p className="text-[11px] text-neutral-400 mb-2 lg:hidden flex">
         {t("in_app_browser_warning") ||
           "Some in-app browsers (like Messenger) block direct downloads. Using long-press is the most reliable way."}
       </p>
