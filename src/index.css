@@ -316,3 +316,44 @@ input[type="range"]::-moz-range-thumb:active {
 .hide-spin-button {
   -moz-appearance: textfield;
 }
+
+@keyframes splash-logo-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  50% {
+    transform: scale(1.04);
+    filter: brightness(1.06);
+  }
+}
+
+.splash-logo-pulse {
+  animation: splash-logo-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes splash-dot-bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  40% {
+    transform: translateY(-5px);
+    opacity: 1;
+  }
+}
+
+.splash-dots span {
+  animation: splash-dot-bounce 1.1s ease-in-out infinite;
+}
+
+.splash-dots span:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.splash-dots span:nth-child(3) {
+  animation-delay: 0.28s;
+}

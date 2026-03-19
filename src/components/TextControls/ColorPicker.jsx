@@ -7,23 +7,23 @@ const DEFAULT_SWATCHES = [
 
 export function ColorPicker({ label, value, onChange }) {
   return (
-    <div className="space-y-0.5 md:space-y-1">
+    <div className="w-full min-w-0 space-y-0.5 md:space-y-1">
       <div className="text-[11px] text-neutral-300">{label}</div>
-      <div className="flex items-center gap-1.5 md:gap-2">
+      <div className="flex w-full min-w-0 items-center gap-1.5 md:gap-2">
         <input
           type="color"
           value={value}
           onChange={e => onChange(e.target.value)}
-          className="flex-1 md:w-8 h-6 rounded-md border border-neutral-700 bg-neutral-900 cursor-pointer"
+          className="h-6 w-12 shrink-0 cursor-pointer rounded-md border border-neutral-700 bg-neutral-900 md:h-6 md:w-8"
         />
         <input
           type="text"
           value={value}
           onChange={e => onChange(e.target.value)}
-          className="w-[100px] md:flex-1 rounded-md bg-neutral-900 border border-neutral-700 px-1.5 py-0.5 md:px-2 md:py-1 text-[11px] md:text-xs outline-none"
+          className="min-w-0 flex-1 rounded-md border border-neutral-700 bg-neutral-900 px-1.5 py-0.5 text-[11px] outline-none md:px-2 md:py-1 md:text-xs"
         />
       </div>
-      <div className="flex flex-wrap gap-1">
+      <div className="flex w-full min-w-0 flex-wrap gap-1">
         {DEFAULT_SWATCHES.map((color, index) => (
           <button
             key={color}

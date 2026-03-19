@@ -67,7 +67,8 @@ const translations = {
     "resolution_notice": "Use 3x for high resolution images.",
     "ok": "OK",
     "notice": "Notice",
-    "uploading...": "Uploading..."
+    "uploading...": "Uploading...",
+    "splash loading": "Loading"
   },
   my: {
     "all": "အားလုံး",
@@ -135,7 +136,8 @@ const translations = {
     "resolution_notice": "ကြည်လင်ပြတ်သားသောပုံရရန် 3x ကို အသုံးပြုပါ။",
     "ok": "အိုကေ",
     "notice": "သတိပေးချက်",
-    "uploading...": "တင်နေသည်..."
+    "uploading...": "တင်နေသည်...",
+    "splash loading": "ဖွင့်နေပါသည်"
   }
 };
 

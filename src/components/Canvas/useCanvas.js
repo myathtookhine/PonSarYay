@@ -186,6 +186,8 @@ export function useCanvas() {
 
     const textbox = new Textbox(initialText, {
       fill: '#ffffff',
+      stroke: '#000000',
+      strokeWidth: 0,
       fontSize: 28,
       width: exactWidth,
       originX: 'center',
