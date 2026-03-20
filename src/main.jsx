@@ -9,6 +9,7 @@ import ReactGA from 'react-ga4';
 const GA_ID = import.meta.env.VITE_GA_MEASUREMENT_ID;
 if (GA_ID && GA_ID !== "G-XXXXXXXXXX") {
   ReactGA.initialize(GA_ID);
+  ReactGA.send({ hitType: "pageview", page: window.location.pathname + window.location.search });
 } else if (import.meta.env.DEV) {
   console.log("Analytics ID missing or default. Add VITE_GA_MEASUREMENT_ID to .env.local");
 }
