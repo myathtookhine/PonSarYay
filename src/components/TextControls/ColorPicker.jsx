@@ -5,7 +5,7 @@ const DEFAULT_SWATCHES = [
   '#ef4444', '#eab308', '#8b5cf6', '#06b6d4', '#64748b'
 ];
 
-export function ColorPicker({ label, value, onChange }) {
+export function ColorPicker({ label, value, onChange, hideSwatches }) {
   return (
     <div className="w-full min-w-0 space-y-0.5 md:space-y-1">
       <div className="text-[11px] text-neutral-300">{label}</div>
@@ -23,17 +23,19 @@ export function ColorPicker({ label, value, onChange }) {
           className="min-w-0 flex-1 rounded-md border border-neutral-700 bg-neutral-900 px-1.5 py-0.5 text-[11px] outline-none md:px-2 md:py-1 md:text-xs"
         />
       </div>
-      <div className="flex w-full min-w-0 flex-wrap gap-1">
-        {DEFAULT_SWATCHES.map((color, index) => (
-          <button
-            key={color}
-            type="button"
-            onClick={() => onChange(color)}
-            className={`w-6 h-6 md:w-8 md:h-8 rounded-full border border-neutral-700 shrink-0 ${index >= 6 ? 'md:hidden' : ''}`}
-            style={{ backgroundColor: color }}
-          />
-        ))}
-      </div>
+      {!hideSwatches && (
+        <div className="flex w-full min-w-0 flex-wrap gap-1">
+          {DEFAULT_SWATCHES.map((color, index) => (
+            <button
+              key={color}
+              type="button"
+              onClick={() => onChange(color)}
+              className={`w-6 h-6 md:w-8 md:h-8 rounded-full border border-neutral-700 shrink-0 ${index >= 6 ? 'md:hidden' : ''}`}
+              style={{ backgroundColor: color }}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

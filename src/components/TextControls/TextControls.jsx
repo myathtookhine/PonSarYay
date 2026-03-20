@@ -187,6 +187,7 @@ export function TextControls({ canvasApi }) {
             label={t("stroke color")}
             value={strokeColor}
             onChange={setStrokeColor}
+            hideSwatches={true}
           />
         </div>
       </div>
