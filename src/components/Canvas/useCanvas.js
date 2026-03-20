@@ -140,6 +140,9 @@ export function useCanvas() {
       if (!file) return;
       setIsLoading(true);
       
+      // Give React a tick to mount and render the loading spinner before intensive work blocks the main thread
+      await new Promise(resolve => setTimeout(resolve, 50));
+
       try {
         const canvas = canvasRef.current;
         if (!canvas) return;
