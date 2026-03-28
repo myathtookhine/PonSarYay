@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { EditorCanvas } from '../Canvas/EditorCanvas.jsx';
 import { CanvasToolbar } from '../Canvas/CanvasToolbar.jsx';
-import { ImageUploader } from '../ImageUploader/ImageUploader.jsx';
 import { FontPicker } from '../FontPicker/FontPicker.jsx';
 import { TextControls } from '../TextControls/TextControls.jsx';
 import { CropModal } from '../CropTool/CropModal.jsx';
 import { ExportPanel } from '../ExportPanel/ExportPanel.jsx';
 import { useCanvas } from '../Canvas/useCanvas.js';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
+import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { Sun, Moon, Languages } from 'lucide-react';
 
 const MOBILE_TABS = ['text controls', 'fonts', 'export'];
@@ -15,11 +16,11 @@ const MOBILE_TABS = ['text controls', 'fonts', 'export'];
 export function AppShell() {
   const canvasApi = useCanvas();
   const { t, language, changeLanguage } = useLanguage();
+  const { darkMode, toggleDarkMode } = useTheme();
   const [activeMobileTab, setActiveMobileTab] = useState('text controls');
   const [isCropOpen, setIsCropOpen] = useState(false);
   const [toast, setToast] = useState(null);
   const [isDesktop, setIsDesktop] = useState(window.innerWidth >= 1024);
-  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const handleResize = () => setIsDesktop(window.innerWidth >= 1024);
@@ -40,7 +41,7 @@ export function AppShell() {
   return (
     <div className={`h-[100dvh] w-full overflow-hidden bg-neutral-950 text-neutral-50 flex flex-col ${!darkMode ? 'light-mode' : ''}`}>
       <header className="border-b border-neutral-800 px-3 md:px-4 py-2 md:py-3 flex items-center justify-between shrink-0">
-        <div className="flex items-center gap-3">
+        <Link to="/" className="flex items-center gap-3" style={{ textDecoration: 'none', color: 'inherit' }}>
           <img src="/ponsaryay.png" alt="Pon-Sar-Yay Logo" className="w-10 h-10 object-contain rounded-md" />
           <div className="flex flex-col justify-center">
             <div className="font-bold uppercase tracking-tight text-lg leading-none mb-0.5">
@@ -50,7 +51,7 @@ export function AppShell() {
               {t('myanmar text-on-image editor')}
             </div>
           </div>
-        </div>
+        </Link>
         <div className="flex items-center gap-2 md:gap-3">
           <button
             type="button"
@@ -64,7 +65,7 @@ export function AppShell() {
           </button>
           <button
             type="button"
-            onClick={() => setDarkMode(prev => !prev)}
+            onClick={toggleDarkMode}
             className="p-1.5 md:p-2 rounded-md border border-neutral-700 hover:bg-neutral-800 text-neutral-300"
             title={darkMode ? 'Switch to light mode' : 'Switch to dark mode'}
           >

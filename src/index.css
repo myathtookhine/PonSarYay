@@ -57,6 +57,58 @@
   font-display: swap;
 }
 
+/* Typewriter Myanmar Fonts */
+@font-face {
+  font-family: 'MyanmarKhyay';
+  src: url('./assets/fonts/MyanmarKhyay.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MasterpieceYayChanZin';
+  src: url('./assets/fonts/MasterpieceYayChanZin.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MyanmarSansPro';
+  src: url('./assets/fonts/MyanmarSansPro.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MyanmarAngoun';
+  src: url('./assets/fonts/MyanmarAngoun.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'MyanmarSabae';
+  src: url('./assets/fonts/MyanmarSabae.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Typewriter English Fonts */
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('./assets/fonts/eng/SpaceGrotesk-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Oswald';
+  src: url('./assets/fonts/eng/Oswald-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Orbitron';
+  src: url('./assets/fonts/eng/Orbitron-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+
 html,
 body,
 #root {

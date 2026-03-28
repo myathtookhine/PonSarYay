@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
 import './index.css';
 import { LanguageProvider } from './contexts/LanguageContext.jsx';
+import { ThemeProvider } from './contexts/ThemeContext.jsx';
 import ReactGA from 'react-ga4';
 
 // Initialize Google Analytics
@@ -26,8 +28,12 @@ if (GA_ID && GA_ID !== "G-XXXXXXXXXX") {
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <LanguageProvider>
-    <App />
-  </LanguageProvider>
+  <BrowserRouter>
+    <LanguageProvider>
+      <ThemeProvider>
+        <App />
+      </ThemeProvider>
+    </LanguageProvider>
+  </BrowserRouter>
 );
 
