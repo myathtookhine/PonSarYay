@@ -44,7 +44,7 @@ export function AppShell() {
         <Link to="/" className="flex items-center gap-3" style={{ textDecoration: 'none', color: 'inherit' }}>
           <img src="/ponsaryay.png" alt="Pon-Sar-Yay Logo" className="w-10 h-10 object-contain rounded-md" />
           <div className="flex flex-col justify-center">
-            <div className="font-bold uppercase tracking-tight text-lg leading-none mb-0.5">
+            <div className="font-bold uppercase tracking-tight text-md leading-none mb-0.5">
               Pon-Sar-Yay
             </div>
             <div className="text-[10px] text-neutral-400 leading-none">

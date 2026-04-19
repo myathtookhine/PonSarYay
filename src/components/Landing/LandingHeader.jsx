@@ -35,7 +35,7 @@ export function LandingHeader() {
       }}>
       <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
         <img src="/ponsaryay.png" alt="Pon-Sar-Yay Logo" style={{ width: 36, height: 36, objectFit: 'contain', borderRadius: 6 }} />
-        <span style={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', fontSize: '1.1rem', color: textPrimary }}>
+        <span className="hidden sm:block" style={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: '-0.01em', fontSize: '1.1rem', color: textPrimary }}>
           Pon-Sar-Yay
         </span>
       </Link>

@@ -74,7 +74,7 @@ export function AboutPage() {
             <Heart size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8, color: '#ef4444' }} />
             {t('about_credits_title')}
           </h2>
-          <p style={{ fontSize: '0.9rem', lineHeight: 1.6, color: darkMode ? '#737373' : '#737373', marginBottom: 20 }}>
+          <p style={{ fontSize: '1rem', lineHeight: 1.7, color: darkMode ? '#a3a3a3' : '#525252', marginBottom: 24 }}>
             {t('about_credits_desc')}
           </p>
           <div style={{
