@@ -110,6 +110,7 @@
   color: #525252;
   margin: 24px 0 32px 0;
   max-width: 440px;
+  white-space: pre-line;
 }
 
 .dark-mode .hero-text p {
