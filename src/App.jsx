@@ -5,7 +5,6 @@ import { SplashScreen } from './components/SplashScreen/SplashScreen.jsx';
 import { LandingPage } from './pages/LandingPage.jsx';
 import { AboutPage } from './pages/AboutPage.jsx';
 import { OfflinePage } from './pages/OfflinePage.jsx';
-import { Analytics } from '@vercel/analytics/react';
 
 const MIN_SPLASH_MS = 1800;
 const SPLASH_FADE_MS = 500;
@@ -60,7 +59,6 @@ function App() {
     return (
       <>
         <SplashScreen exiting={splashExiting} />
-        <Analytics />
       </>
     );
   }
@@ -70,7 +68,6 @@ function App() {
     return (
       <>
         <OfflinePage />
-        <Analytics />
       </>
     );
   }
@@ -81,7 +78,6 @@ function App() {
       <Route path="/editor" element={<AppShell />} />
       <Route path="/about" element={<AboutPage />} />
     </Routes>
-    <Analytics />
   </>;
 }
 
