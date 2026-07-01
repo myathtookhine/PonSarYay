@@ -27,6 +27,13 @@ export function PreviewModal({ isOpen, onClose, imageUrl, filename }) {
               src={imageUrl}
               alt="Export Preview"
               className="max-w-full h-auto rounded-lg shadow-lg border border-neutral-700"
+              onContextMenu={() => {
+                ReactGA.event({
+                  category: "User_Action",
+                  action: "image_long_press_attempt",
+                  label: filename || "edited-image",
+                });
+              }}
             />
           </div>
           
