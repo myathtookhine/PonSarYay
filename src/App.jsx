@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { AppShell } from './components/Layout/AppShell.jsx';
 import { SplashScreen } from './components/SplashScreen/SplashScreen.jsx';
 import { LandingPage } from './pages/LandingPage.jsx';
 import { AboutPage } from './pages/AboutPage.jsx';
 import { OfflinePage } from './pages/OfflinePage.jsx';
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage.jsx';
+import { TermsOfServicePage } from './pages/TermsOfServicePage.jsx';
+import { ContactPage } from './pages/ContactPage.jsx';
+import { HowToUsePage } from './pages/HowToUsePage.jsx';
+import { TypographyTipsPage } from './pages/TypographyTipsPage.jsx';
+import { BlogPage } from './pages/BlogPage.jsx';
+import { BlogPostPage } from './pages/BlogPostPage.jsx';
+import { ScrollToTop } from './components/Common/ScrollToTop.jsx';
+import { trackPageView } from './utils/analytics.js';
 
 const MIN_SPLASH_MS = 1800;
 const SPLASH_FADE_MS = 500;
@@ -13,6 +22,12 @@ function App() {
   const [showSplash, setShowSplash] = useState(true);
   const [splashExiting, setSplashExiting] = useState(false);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const location = useLocation();
+
+  // Track SPA pageviews on route change
+  useEffect(() => {
+    trackPageView(location.pathname + location.search, document.title);
+  }, [location]);
 
   // Splash screen logic
   useEffect(() => {
@@ -73,10 +88,19 @@ function App() {
   }
 
   return <>
+    <ScrollToTop />
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/editor" element={<AppShell />} />
       <Route path="/about" element={<AboutPage />} />
+      <Route path="/how-to-use" element={<HowToUsePage />} />
+      <Route path="/typography-tips" element={<TypographyTipsPage />} />
+      <Route path="/blog" element={<BlogPage />} />
+      <Route path="/blog/:slug" element={<BlogPostPage />} />
+      <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+      <Route path="/terms-of-service" element={<TermsOfServicePage />} />
+      <Route path="/contact" element={<ContactPage />} />
+      <Route path="*" element={<LandingPage />} />
     </Routes>
   </>;
 }

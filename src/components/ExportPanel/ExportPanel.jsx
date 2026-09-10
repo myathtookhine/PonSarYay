@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
 import { isInAppBrowser } from '../../utils/browserUtils.js';
 import ReactGA from 'react-ga4';
+import { Copy, Check, Share2 } from 'lucide-react';
 import { PreviewModal } from './PreviewModal.jsx';
 import { MessageModal } from '../common/MessageModal.jsx';
+import { trackCopyClipboard, trackNativeShare } from '../../utils/analytics.js';
 
 export function ExportPanel({ canvasApi }) {
   const { t } = useLanguage();
@@ -15,6 +17,7 @@ export function ExportPanel({ canvasApi }) {
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [imageName, setImageName] = useState('');
   const [error, setError] = useState('');
+  const [copied, setCopied] = useState(false);
 
   const onExport = async () => {
     if (!canvasApi.hasImage) {
@@ -40,6 +43,59 @@ export function ExportPanel({ canvasApi }) {
 
     setPreviewUrl(url);
     setIsPreviewOpen(true);
+  };
+
+  const handleCopyClipboard = async () => {
+    if (!canvasApi.hasImage) {
+      setIsErrorModalOpen(true);
+      return;
+    }
+    try {
+      // Always use maximum resolution (3x) for crystal-clear clipboard copy
+      const url = await canvasApi.exportAs('png', 1, 3, 'copy', false);
+      const res = await fetch(url);
+      const blob = await res.blob();
+      if (navigator.clipboard && navigator.clipboard.write) {
+        await navigator.clipboard.write([
+          new ClipboardItem({ 'image/png': blob })
+        ]);
+        trackCopyClipboard('png', 3);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+      } else {
+        onExport();
+      }
+    } catch (err) {
+      console.error("Clipboard copy failed, opening preview instead:", err);
+      onExport();
+    }
+  };
+
+  const handleNativeShare = async () => {
+    if (!canvasApi.hasImage) {
+      setIsErrorModalOpen(true);
+      return;
+    }
+    try {
+      // Always use maximum resolution (3x) for crystal-clear native mobile sharing
+      const url = await canvasApi.exportAs('png', 1, 3, imageName.trim() || 'pon-sar-yay', false);
+      const res = await fetch(url);
+      const blob = await res.blob();
+      const file = new File([blob], `${imageName.trim() || 'ponsaryay'}.png`, { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: 'Pon-Sar-Yay Creation',
+          text: 'Made with Pon-Sar-Yay (ပုံစာရေး)',
+        });
+        trackNativeShare('png', 3);
+      } else {
+        onExport();
+      }
+    } catch (err) {
+      console.error("Native share failed, opening preview instead:", err);
+      onExport();
+    }
   };
 
   return (
@@ -146,10 +202,44 @@ export function ExportPanel({ canvasApi }) {
       <button
         type="button"
         onClick={onExport}
-        className="w-full mt-1 rounded-md bg-orange-600 text-sm py-2 md:py-3 font-semibold hover:bg-orange-500 transition-colors"
+        className="w-full mt-1 rounded-md bg-orange-600 text-sm py-2 md:py-3 font-semibold hover:bg-orange-500 transition-colors shadow-sm"
       >
         {t("download image")}
       </button>
+
+      {/* Direct Copy & Share actions */}
+      <div className="flex gap-1.5 pt-1">
+        <button
+          type="button"
+          onClick={handleCopyClipboard}
+          className="flex-1 flex items-center justify-center gap-1.5 py-2 px-2 rounded-md border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 text-xs font-semibold transition-colors"
+          title={t("copy_image")}
+        >
+          {copied ? (
+            <>
+              <Check size={14} className="text-emerald-500" />
+              <span className="text-emerald-400">{t("copied")}</span>
+            </>
+          ) : (
+            <>
+              <Copy size={14} />
+              <span>{t("copy_image")}</span>
+            </>
+          )}
+        </button>
+
+        {typeof navigator !== 'undefined' && !!navigator.share && (
+          <button
+            type="button"
+            onClick={handleNativeShare}
+            className="flex items-center justify-center gap-1.5 py-2 px-3 rounded-md border border-neutral-700 bg-neutral-900 hover:bg-neutral-800 text-neutral-200 text-xs font-semibold transition-colors"
+            title={t("share")}
+          >
+            <Share2 size={14} />
+            <span>{t("share")}</span>
+          </button>
+        )}
+      </div>
 
       <PreviewModal
         isOpen={isPreviewOpen}

@@ -9,7 +9,7 @@ import { ExportPanel } from '../ExportPanel/ExportPanel.jsx';
 import { useCanvas } from '../Canvas/useCanvas.js';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
-import { Sun, Moon, Languages } from 'lucide-react';
+import { Sun, Moon, Languages, HelpCircle } from 'lucide-react';
 
 const MOBILE_TABS = ['text controls', 'fonts', 'export'];
 
@@ -53,6 +53,16 @@ export function AppShell() {
           </div>
         </Link>
         <div className="flex items-center gap-2 md:gap-3">
+          <Link
+            to="/how-to-use"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="p-1.5 md:p-2 rounded-md border border-neutral-700 hover:bg-neutral-800 text-neutral-300 flex items-center gap-1.5 text-xs font-medium no-underline"
+            title="How to Use Guide"
+          >
+            <HelpCircle size={16} />
+            <span className="hidden md:inline">{language === 'my' ? 'လမ်းညွှန်' : 'Guide'}</span>
+          </Link>
           <button
             type="button"
             onClick={() => changeLanguage(language === 'en' ? 'my' : 'en')}

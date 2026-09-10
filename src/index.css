@@ -187,11 +187,11 @@ body.lang-my {
 .light-mode .text-neutral-100,
 .light-mode .text-neutral-200,
 .light-mode .text-neutral-300 {
-  color: #262626 !important;
+  color: #171717 !important;
 }
 
 .light-mode .text-neutral-400 {
-  color: #737373 !important;
+  color: #525252 !important;
 }
 
 /* Border overrides */
@@ -252,6 +252,19 @@ body.lang-my {
 }
 
 /* Custom minimal scrollbars */
+.hide-scrollbar::-webkit-scrollbar,
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.hide-scrollbar,
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+
 * {
   scrollbar-width: thin; /* Firefox */
   scrollbar-color: #404040 transparent; /* Firefox */
@@ -409,3 +422,46 @@ input[type="range"]::-moz-range-thumb:active {
 .splash-dots span:nth-child(3) {
   animation-delay: 0.28s;
 }
+
+/* Circular Radiation for Upload Icon */
+@keyframes upload-radiate-1 {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(2.3);
+    opacity: 0;
+  }
+}
+
+@keyframes upload-radiate-2 {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: scale(2.9);
+    opacity: 0;
+  }
+}
+
+.radiation-ring-1 {
+  animation: upload-radiate-1 2.6s cubic-bezier(0.1, 0.4, 0.6, 1) infinite;
+}
+
+.radiation-ring-2 {
+  animation: upload-radiate-2 2.6s cubic-bezier(0.1, 0.4, 0.6, 1) infinite;
+  animation-delay: 1.3s;
+}
+
+.radiation-glow {
+  animation: pulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+

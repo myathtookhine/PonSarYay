@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { Canvas, Image as FabricImage, IText, Textbox } from 'fabric';
+import { Canvas, Image as FabricImage, IText, Textbox, Shadow, Rect } from 'fabric';
 import { exportCanvas } from '../../utils/canvasExport.js';
 import { createObjectUrlImage, resizeImageToMax } from '../../utils/imageHelpers.js';
 
@@ -17,6 +17,7 @@ export function useCanvas() {
   const [hasImage, setHasImage] = useState(false);
   const [uploadError, setUploadError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [dimmerOpacity, setDimmerOpacity] = useState(0);
   const zoomRef = useRef(1);
   const showToastRef = useRef(null);
 
@@ -111,8 +112,22 @@ export function useCanvas() {
     canvas.setDimensions({ width, height });
 
     // Re-center the background image after resize
-    if (canvas.backgroundImage) {
-      positionBackgroundImage(canvas, canvas.backgroundImage);
+    const bg = canvas.getObjects().find(obj => obj.isBackground);
+    if (bg) {
+      positionBackgroundImage(canvas, bg);
+      const dimmer = canvas.getObjects().find(obj => obj.isDimmer);
+      if (dimmer) {
+        dimmer.set({
+          originX: bg.originX,
+          originY: bg.originY,
+          left: bg.left,
+          top: bg.top,
+          width: bg.width,
+          height: bg.height,
+          scaleX: bg.scaleX,
+          scaleY: bg.scaleY,
+        });
+      }
     }
 
     canvas.renderAll();
@@ -232,7 +247,43 @@ export function useCanvas() {
     const active = canvas.getActiveObject();
     if (!active || (!(active instanceof IText) && !(active instanceof Textbox))) return;
 
-    active.set(props);
+    if (props.shadow !== undefined) {
+      if (props.shadow && typeof props.shadow === 'object') {
+        active.set('shadow', new Shadow(props.shadow));
+      } else {
+        active.set('shadow', null);
+      }
+      const rest = { ...props };
+      delete rest.shadow;
+      active.set(rest);
+    } else {
+      active.set(props);
+    }
+    canvas.renderAll();
+    saveHistory();
+  }, [saveHistory]);
+
+  const bringForward = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const active = canvas.getActiveObject();
+    if (!active) return;
+    canvas.bringObjectForward(active);
+    canvas.renderAll();
+    saveHistory();
+  }, [saveHistory]);
+
+  const sendBackward = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const active = canvas.getActiveObject();
+    if (!active) return;
+    canvas.sendObjectBackwards(active);
+    // Keep background and dimmer at the bottom
+    const bg = canvas.getObjects().find(o => o.isBackground);
+    const dimmer = canvas.getObjects().find(o => o.isDimmer);
+    if (dimmer) canvas.sendObjectToBack(dimmer);
+    if (bg) canvas.sendObjectToBack(bg);
     canvas.renderAll();
     saveHistory();
   }, [saveHistory]);
@@ -381,6 +432,144 @@ export function useCanvas() {
     [positionBackgroundImage, saveHistory],
   );
 
+  const updateDimmer = useCallback(
+    opacity => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      const clamped = Math.max(0, Math.min(0.9, Number(opacity) || 0));
+      setDimmerOpacity(clamped);
+
+      const bg = canvas.getObjects().find(o => o.isBackground);
+      let dimmer = canvas.getObjects().find(o => o.isDimmer);
+
+      if (clamped <= 0) {
+        if (dimmer) {
+          canvas.remove(dimmer);
+          canvas.renderAll();
+          saveHistory();
+        }
+        return;
+      }
+
+      if (!dimmer) {
+        dimmer = new Rect({
+          isDimmer: true,
+          selectable: false,
+          evented: false,
+          hoverCursor: 'default',
+          fill: '#000000',
+          originX: bg ? bg.originX : 'center',
+          originY: bg ? bg.originY : 'center',
+          left: bg ? bg.left : canvas.getWidth() / 2,
+          top: bg ? bg.top : canvas.getHeight() / 2,
+          width: bg ? bg.width : canvas.getWidth(),
+          height: bg ? bg.height : canvas.getHeight(),
+          scaleX: bg ? bg.scaleX : 1,
+          scaleY: bg ? bg.scaleY : 1,
+          opacity: clamped,
+        });
+        canvas.add(dimmer);
+      } else {
+        if (bg) {
+          dimmer.set({
+            originX: bg.originX,
+            originY: bg.originY,
+            left: bg.left,
+            top: bg.top,
+            width: bg.width,
+            height: bg.height,
+            scaleX: bg.scaleX,
+            scaleY: bg.scaleY,
+            opacity: clamped,
+          });
+        } else {
+          dimmer.set({ opacity: clamped });
+        }
+      }
+
+      // Ensure proper stacking order: bg at back, dimmer right above bg
+      canvas.sendObjectToBack(dimmer);
+      if (bg) {
+        canvas.sendObjectToBack(bg);
+      }
+
+      canvas.renderAll();
+      saveHistory();
+    },
+    [saveHistory],
+  );
+
+  const createSolidBackground = useCallback(
+    (color = '#171717', aspect = '1:1') => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      canvas.clear();
+
+      const canvasWidth = canvas.getWidth();
+      const canvasHeight = canvas.getHeight();
+
+      let targetW = 1080;
+      let targetH = 1080;
+      if (aspect === '4:5') {
+        targetW = 1080;
+        targetH = 1350;
+      } else if (aspect === '9:16') {
+        targetW = 1080;
+        targetH = 1920;
+      } else if (aspect === '16:9') {
+        targetW = 1920;
+        targetH = 1080;
+      }
+
+      const scale = Math.min((canvasWidth * 0.9) / targetW, (canvasHeight * 0.9) / targetH) || 1;
+
+      const bgRect = new Rect({
+        isBackground: true,
+        selectable: false,
+        evented: false,
+        hoverCursor: 'default',
+        originX: 'center',
+        originY: 'center',
+        left: canvasWidth / 2,
+        top: canvasHeight / 2,
+        width: targetW,
+        height: targetH,
+        scaleX: scale,
+        scaleY: scale,
+        fill: color,
+      });
+
+      canvas.add(bgRect);
+      canvas.sendObjectToBack(bgRect);
+
+      setHasImage(true);
+      setUploadError(null);
+      setDimmerOpacity(0);
+
+      // Add starter text layer so creator can immediately type
+      const initialText = 'လက်ရေးလှလှ';
+      const textbox = new Textbox(initialText, {
+        left: canvasWidth / 2,
+        top: canvasHeight / 2,
+        originX: 'center',
+        originY: 'center',
+        fontSize: Math.round(36 * scale),
+        fill: color === '#ffffff' || color === '#fafafa' || color === '#f5f5f0' ? '#171717' : '#ffffff',
+        fontFamily: selectedFontId || 'MyanmarAngoun',
+        textAlign: 'center',
+        splitByGrapheme: true,
+      });
+      canvas.add(textbox);
+      canvas.setActiveObject(textbox);
+
+      canvas.requestRenderAll();
+      history.current = { undo: [], redo: [] };
+      saveHistory();
+    },
+    [selectedFontId, saveHistory],
+  );
+
   const clearImage = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -388,6 +577,7 @@ export function useCanvas() {
     canvas.backgroundColor = 'transparent';
     canvas.renderAll();
     setHasImage(false);
+    setDimmerOpacity(0);
     setUploadError(null);
     history.current = { undo: [], redo: [] };
     saveHistory();
@@ -427,6 +617,8 @@ export function useCanvas() {
     duplicateSelected,
     undo,
     redo,
+    bringForward,
+    sendBackward,
     exportAs,
     selectedObject,
     canUndo,
@@ -434,6 +626,9 @@ export function useCanvas() {
     selectedFontId,
     applyFont,
     hasImage,
+    dimmerOpacity,
+    updateDimmer,
+    createSolidBackground,
     getBackgroundImageDataUrl,
     applyCroppedBackground,
     clearImage,

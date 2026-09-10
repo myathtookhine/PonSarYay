@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { trackThemeToggle } from '../utils/analytics.js';
 
 const ThemeContext = createContext();
 
@@ -10,9 +11,24 @@ export function ThemeProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem('app_dark_mode', darkMode);
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+      document.body.classList.add('dark-mode');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      document.body.classList.remove('dark-mode');
+    }
   }, [darkMode]);
 
-  const toggleDarkMode = () => setDarkMode(prev => !prev);
+  const toggleDarkMode = () => {
+    setDarkMode(prev => {
+      const next = !prev;
+      trackThemeToggle(next ? 'dark' : 'light');
+      return next;
+    });
+  };
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleDarkMode }}>

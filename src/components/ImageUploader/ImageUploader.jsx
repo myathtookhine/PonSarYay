@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
-import { AlertTriangle, Image as ImageIcon } from 'lucide-react';
+import { AlertTriangle, Upload } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
+import { trackImageUpload } from '../../utils/analytics.js';
 
 export function ImageUploader({ onImageLoaded, errorMessage }) {
   const { t } = useLanguage();
@@ -11,6 +12,7 @@ export function ImageUploader({ onImageLoaded, errorMessage }) {
     files => {
       const file = files?.[0];
       if (!file) return;
+      trackImageUpload(file.type || 'unknown', Math.round(file.size / 1024));
       onImageLoaded?.(file);
     },
     [onImageLoaded],
@@ -40,7 +42,7 @@ export function ImageUploader({ onImageLoaded, errorMessage }) {
 
   return (
     <div
-      className={`w-full h-full flex flex-col items-center justify-center text-xs cursor-pointer transition-colors ${
+      className={`w-full h-full flex flex-col items-center justify-center text-xs cursor-pointer transition-colors p-4 ${
         isDragging ? 'bg-orange-500/10' : 'bg-transparent'
       }`}
       onClick={() => inputRef.current?.click()}
@@ -48,8 +50,16 @@ export function ImageUploader({ onImageLoaded, errorMessage }) {
       onDragOver={onDragOver}
       onDragLeave={onDragLeave}
     >
-      <div className="w-16 h-16 mb-4 rounded-full bg-orange-600 flex items-center justify-center text-white shadow-lg">
-        <ImageIcon size={32} />
+      <div className="relative mb-5 flex items-center justify-center">
+        {/* Radiating circular waves */}
+        <div className="absolute w-16 h-16 rounded-full border-2 border-orange-500/50 radiation-ring-1 pointer-events-none" />
+        <div className="absolute w-16 h-16 rounded-full border border-orange-400/35 radiation-ring-2 pointer-events-none" />
+        <div className="absolute -inset-2 rounded-full bg-orange-500/20 radiation-glow pointer-events-none blur-sm" />
+
+        {/* Center icon circle */}
+        <div className="relative z-10 w-16 h-16 rounded-full bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white shadow-xl shadow-orange-600/40 transition-transform duration-300 hover:scale-105">
+          <Upload size={30} />
+        </div>
       </div>
       <div className="font-bold mb-1 text-xl">{t('upload image')}</div>
 
@@ -61,7 +71,7 @@ export function ImageUploader({ onImageLoaded, errorMessage }) {
           </div>
         </div>
       ) : (
-        <div className="text-neutral-400 text-center max-w-[250px] mt-2 px-4">
+        <div className="text-neutral-400 text-center max-w-[260px] mt-1.5 px-4 leading-relaxed">
           {t('click to dropzone')}
         </div>
       )}

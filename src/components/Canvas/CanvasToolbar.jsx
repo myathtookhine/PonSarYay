@@ -1,6 +1,7 @@
 import React from 'react';
-import { Undo, Redo, Crop, Trash2, Copy, Eraser, Type } from 'lucide-react';
+import { Undo, Redo, Crop, Trash2, Copy, Eraser, Type, SunMedium } from 'lucide-react';
 import { useLanguage } from '../../contexts/LanguageContext.jsx';
+import { trackAddText } from '../../utils/analytics.js';
 
 export function CanvasToolbar({ canvasApi, onOpenCrop, showToast }) {
   const { t } = useLanguage();
@@ -9,6 +10,7 @@ export function CanvasToolbar({ canvasApi, onOpenCrop, showToast }) {
       canvasApi.setUploadError(t('please upload an image first.'));
       return;
     }
+    trackAddText();
     canvasApi.addTextLayer();
   };
 
@@ -50,6 +52,7 @@ export function CanvasToolbar({ canvasApi, onOpenCrop, showToast }) {
         {renderUndoRedoCrop('md:hidden')}
       </div>
 
+      {/* Main Action Buttons Row */}
       <div className="flex items-center gap-1.5 md:gap-2 w-full overflow-x-auto hide-scrollbar">
         <button
           type="button"
@@ -62,7 +65,8 @@ export function CanvasToolbar({ canvasApi, onOpenCrop, showToast }) {
         <button
           type="button"
           onClick={canvasApi.deleteSelected}
-          className="p-1.5 md:p-2 rounded-md border border-neutral-700 text-neutral-300 hover:bg-neutral-800 shrink-0"
+          disabled={!canvasApi.selectedObject}
+          className="p-1.5 md:p-2 rounded-md border border-neutral-700 text-neutral-300 disabled:opacity-30 hover:bg-neutral-800 shrink-0"
           title={t('delete text')}
         >
           <Trash2 size={16} />
@@ -70,7 +74,8 @@ export function CanvasToolbar({ canvasApi, onOpenCrop, showToast }) {
         <button
           type="button"
           onClick={canvasApi.duplicateSelected}
-          className="p-1.5 md:p-2 rounded-md border border-neutral-700 text-neutral-300 hover:bg-neutral-800 shrink-0"
+          disabled={!canvasApi.selectedObject}
+          className="p-1.5 md:p-2 rounded-md border border-neutral-700 text-neutral-300 disabled:opacity-30 hover:bg-neutral-800 shrink-0"
           title={t('duplicate text')}
         >
           <Copy size={16} />
@@ -88,6 +93,33 @@ export function CanvasToolbar({ canvasApi, onOpenCrop, showToast }) {
           <span className='ml-1.5 text-xs md:text-sm whitespace-nowrap font-medium'>{t('clear image')}</span>
         </button>
       </div>
+
+      {/* Dedicated Row Underneath: Image Overlay Full Width on Mobile */}
+      {canvasApi.hasImage && (
+        <div className="pt-1.5 border-t border-neutral-900 w-full">
+          <div
+            className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg border border-neutral-800 bg-neutral-900 w-full sm:w-auto"
+            title={t('dimmer_desc')}
+          >
+            <SunMedium size={15} className="text-orange-400 shrink-0" />
+            <span className="text-xs font-medium text-neutral-200 whitespace-nowrap shrink-0">
+              {t('dimmer')}
+            </span>
+            <input
+              type="range"
+              min="0"
+              max="0.85"
+              step="0.05"
+              value={canvasApi.dimmerOpacity || 0}
+              onChange={e => canvasApi.updateDimmer(parseFloat(e.target.value))}
+              className="flex-1 sm:w-44 h-2 accent-orange-500 cursor-pointer"
+            />
+            <span className="text-xs text-neutral-400 tabular-nums w-8 text-right font-semibold shrink-0">
+              {Math.round((canvasApi.dimmerOpacity || 0) * 100)}%
+            </span>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { trackLanguageChange } from '../utils/analytics.js';
 
 const translations = {
   en: {
@@ -90,17 +91,53 @@ const translations = {
     "about_story": "Pon-Sar-Yay is a free, simple tool for writing beautiful Myanmar text on images. Whether you want to write poems, quotes, or create memes — this is for you.",
     "about_credits_title": "Font Credits",
     "about_credits_desc": "We are deeply grateful to the font creators who made their beautiful work available. We honor and showcase them with the utmost respect. If any font creator wishes for their fonts not to be displayed here, please kindly contact us.",
-    "about_opensource_title": "Open Source",
-    "about_opensource_desc": "Pon-Sar-Yay is open source. Visit our GitHub to contribute or report issues.",
+    "about_opensource_title": "Community",
+    "about_opensource_desc": "Pon-Sar-Yay is built for creators. Feel free to contact us to share feedback or report issues.",
     "footer_text": "Made with ❤️ for Creatives",
     "offline_title": "No Internet Connection",
     "offline_desc": "Please check your internet connection and try again.",
-    "offline_retry": "Try Again"
+    "offline_retry": "Try Again",
+    "dimmer": "Image Overlay",
+    "dimmer_desc": "Darken photo for higher text contrast",
+    "glow": "Glow",
+    "soft_shadow": "Soft Shadow",
+    "hard_shadow": "Drop Shadow",
+    "none": "None",
+    "solid_bg": "Solid Background",
+    "or_solid": "Or write on solid background",
+    "layer_forward": "Bring Forward",
+    "layer_backward": "Send Backward",
+    "copied": "Copied to clipboard!",
+    "copy_image": "Copy to Clipboard",
+    "share": "Share",
+    "ratio_free": "Free",
+    "ratio_square": "1:1 Square",
+    "ratio_portrait": "4:5 Portrait",
+    "ratio_story": "9:16 Story",
+    "ratio_landscape": "16:9 Banner"
   },
   my: {
     "all": "အားလုံး",
     "myanmar": "မြန်မာ",
     "english": "အင်္ဂလိပ်",
+    "dimmer": "Image Overlay",
+    "dimmer_desc": "စာသားပိုထင်ရှားစေရန် ဓာတ်ပုံအား အမှောင်ချပါ",
+    "glow": "အလင်းဝိုင်း",
+    "soft_shadow": "အရိပ်နု",
+    "hard_shadow": "အရိပ်ရင့်",
+    "none": "မပါ",
+    "solid_bg": "ကာလာနောက်ခံ",
+    "or_solid": "သို့မဟုတ် ကာလာနောက်ခံဖြင့် စာရေးမည်",
+    "layer_forward": "ရှေ့သို့တင်မည်",
+    "layer_backward": "နောက်သို့ပို့မည်",
+    "copied": "ပုံကူးယူပြီးပါပြီ!",
+    "copy_image": "ပုံကူးယူမည်",
+    "share": "မျှဝေမည်",
+    "ratio_free": "စိတ်ကြိုက်",
+    "ratio_square": "၁:၁ စတုရန်း",
+    "ratio_portrait": "၄:၅ ပုံတူ",
+    "ratio_story": "၉:၁၆ စတိုရီ",
+    "ratio_landscape": "၁၆:၉ အလျားလိုက်",
     "fonts": "ဖောင့်စတိုင်များ",
     "text controls": "စာသားချိန်ညှိ",
     "export": "ပုံထုတ်ရန်",
@@ -131,7 +168,7 @@ const translations = {
     "apply": "အသုံးပြုမည်",
     "reset": "ပြန်လည်စတင်မည်",
     "image quality": "ပုံအရည်အသွေး",
-    "canvas background": "ပတ္တူနောက်ခံ",
+    "canvas background": "ကင်းဗတ်ပုံနောက်ခံ",
     "shadow": "အရိပ်",
     "blur": "ဝေဝါးမှု",
     "offset x": "ဝင်ရိုး X ရွှေ့ရန်",
@@ -186,8 +223,8 @@ const translations = {
     "about_story": "Pon-Sar-Yay ဟာ ပုံပေါ်မှာ မြန်မာစာလှလှလေးတွေ ရေးသားဖို့အတွက် အခမဲ့ ရိုးရှင်းတဲ့ ကိရိယာတစ်ခုဖြစ်ပါတယ်။ ကဗျာ၊ ကိုးကားချက် ဒါမှမဟုတ် meme တွေ ဖန်တီးချင်တယ်ဆိုရင် ဒါက သင့်အတွက်ပါ။",
     "about_credits_title": "ဖောင့်ဖန်တီးသူများ",
     "about_credits_desc": "လှပတဲ့ ဖောင့်တွေကို ဖန်တီးပေးခဲ့ကြတဲ့ ဖန်တီးသူတွေကို အထူးကျေးဇူးတင်ရှိပါသည်။ ဖောင့်ဖန်တီးသူများကို လေးစားသမှုဖြင့် ဂုဏ်ပြုဖော်ပြထားအပ်ပါသည်။ အကယ်၍ ဖောင့်ဖန်တီးသူတစ်ဦးဦးအနေဖြင့် မိမိတို့၏ ဖောင့်များအား ဤနေရာတွင် ဖော်ပြခြင်းကို မလိုလားပါက ကျေးဇူးပြု၍ ဆက်သွယ်ပေးပါရန် မေတ္တာရပ်ခံအပ်ပါသည်။",
-    "about_opensource_title": "Open Source",
-    "about_opensource_desc": "Pon-Sar-Yay ဟာ open source ဖြစ်ပါတယ်။ GitHub မှာ ပါဝင်ကူညီနိုင်ပါတယ်။",
+    "about_opensource_title": "အကြံပြုချက်",
+    "about_opensource_desc": "Pon-Sar-Yay သည် အားလုံးအတွက် ဖြစ်ပါသည်။ အကြံပြုချက်များ၊ အမှားအယွင်းများရှိပါက ဆက်သွယ်အကြောင်းကြားနိုင်ပါသည်။",
     "footer_text": "Made with ❤️ for Creatives",
     "offline_title": "အင်တာနက်ချိတ်ဆက်မှုမရှိပါ",
     "offline_desc": "ကျေးဇူးပြု၍ အင်တာနက်ချိတ်ဆက်မှုရှိမရှိကို စစ်ဆေးပြီး ထပ်မံကြိုးစားပါ။",
@@ -214,6 +251,7 @@ export function LanguageProvider({ children }) {
     setLanguage(lang);
     localStorage.setItem('app_language', lang);
     document.body.classList.toggle('lang-my', lang === 'my');
+    trackLanguageChange(lang);
   };
 
   const t = (text) => {

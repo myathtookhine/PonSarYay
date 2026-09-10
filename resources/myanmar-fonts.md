@@ -16,7 +16,6 @@
 
 - Google Fonts Myanmar: https://fonts.google.com/?subset=myanmar
 - SIL Fonts: https://software.sil.org/fonts/
-- Myanmar NLP fonts: https://github.com/ye-kyaw-thu/myFont
 
 ## Font Preview Sample Texts
 

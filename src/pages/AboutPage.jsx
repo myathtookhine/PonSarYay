@@ -1,9 +1,8 @@
 import React from 'react';
-import { LandingHeader } from '../components/Landing/LandingHeader.jsx';
-import { LandingFooter } from '../components/Landing/LandingFooter.jsx';
+import { StaticPageLayout } from '../components/Landing/StaticPageLayout.jsx';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
-import { Github, Heart } from 'lucide-react';
+import { Heart, Sparkles, ShieldCheck, Zap, Layers, Award } from 'lucide-react';
 
 const FONT_CREDITS = [
   { name: 'Pyidaungsu', author: 'Myanmar Unicode & NLP Research Center' },
@@ -39,108 +38,129 @@ const FONT_CREDITS = [
   { name: 'Yangon', author: 'Myanmar Font Creator' },
   { name: 'YoeYar One', author: 'Myanmar Font Creator' },
   { name: 'Inter', author: 'Rasmus Andersson' },
+  { name: 'Space Grotesk', author: 'Florian Karsten' },
 ];
 
 export function AboutPage() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { darkMode } = useTheme();
 
+  const cardBg = darkMode ? '#121212' : '#ffffff';
+  const borderColor = darkMode ? '#262626' : '#e5e7eb';
+  const textPrimary = darkMode ? '#ffffff' : '#0f172a';
+  const textSecondary = darkMode ? '#d1d5db' : '#374151';
+
   return (
-    <div
-      className="landing-page"
-      style={{ backgroundColor: darkMode ? '#0a0a0a' : '#ffffff', color: darkMode ? '#f5f5f5' : '#171717' }}
+    <StaticPageLayout
+      title="About PonSarYay"
+      description="Learn about PonSarYay (ပုံစာရေး), our mission to empower Myanmar creators with beautiful typography on images, and our heartfelt credits to Myanmar font artisans."
+      keywords="about PonSarYay, Myanmar typography, Myanmar font creators, image text editor story, font credits"
+      breadcrumbs={[{ label: 'About' }]}
+      badge="Our Story & Mission"
+      headline="About Pon-Sar-Yay (ပုံစာရေး)"
+      subheadline="A free, privacy-first typography studio built to make writing beautiful Myanmar and English text on photos effortless, modern, and universally accessible."
     >
-      <LandingHeader />
-
-      <main style={{ maxWidth: 800, margin: '0 auto', padding: '48px 24px' }}>
-        {/* Title */}
-        <h1 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: 40, letterSpacing: '-0.02em' }}>
-          {t('about_title')}
-        </h1>
-
-        {/* Our Story */}
-        <section style={{ marginBottom: 48 }}>
-          {/* <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: 12, color: darkMode ? '#f5f5f5' : '#171717' }}>
-            {t('about_story_title')}
-          </h2> */}
-          <p style={{ fontSize: '1rem', lineHeight: 1.7, color: darkMode ? '#a3a3a3' : '#525252', margin: 0 }}>
-            {t('about_story')}
-          </p>
-        </section>
-
-        {/* Font Credits */}
-        <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: 8, color: darkMode ? '#f5f5f5' : '#171717' }}>
-            <Heart size={18} style={{ display: 'inline', verticalAlign: 'middle', marginRight: 8, color: '#ef4444' }} />
-            {t('about_credits_title')}
+      {/* Mission & Problem Statement */}
+      <section className="space-y-6 mb-12">
+        <div className="p-6 sm:p-10 rounded-2xl border" style={{ backgroundColor: cardBg, borderColor }}>
+          <h2 className="text-2xl sm:text-3xl font-bold mb-4 tracking-tight" style={{ color: textPrimary }}>
+            {language === 'my' ? 'ကျွန်ုပ်တို့၏ ရည်ရွယ်ချက်' : 'Why We Built Pon-Sar-Yay'}
           </h2>
-          <p style={{ fontSize: '1rem', lineHeight: 1.7, color: darkMode ? '#a3a3a3' : '#525252', marginBottom: 24 }}>
+          <p className="text-base sm:text-xl leading-relaxed sm:leading-loose mb-5" style={{ color: textSecondary }}>
+            {language === 'my'
+              ? 'PonSarYay (ပုံစာရေး) သည် ဓာတ်ပုံများပေါ်တွင် မြန်မာစာနှင့် အင်္ဂလိပ်စာများကို လှပသပ်ရပ်စွာ ရေးသားနိုင်ရန် ရည်ရွယ်၍ ဖန်တီးထားသည့် ဝဘ်အက်ပလီကေးရှင်းတစ်ခု ဖြစ်ပါသည်။ ဆိုရှယ်မီဒီယာ ပိုစ့်များ၊ ကဗျာများ၊ ကောက်နုတ်ချက်များနှင့် ကြော်ငြာများကို မြန်မာဖောင့်အမျိုးမျိုး အသုံးပြု၍ စိတ်ကြိုက် ပြင်ဆင်နိုင်စေရန် ဖန်တီးထားပါသည်။'
+              : 'Adding beautiful Myanmar text to images has historically been frustrating. Many popular international photo editing tools fail to properly render complex Myanmar Unicode glyphs, resulting in misplaced vowel marks, broken subscripts, and awkward letter collisions.'}
+          </p>
+          <p className="text-base sm:text-xl leading-relaxed sm:leading-loose" style={{ color: textSecondary }}>
+            {language === 'my'
+              ? 'ကွန်ပျူတာဖြင့်သာမက စမတ်ဖုန်းများဖြင့်ပါ မည်သည့်ဆော့ဖ်ဝဲလ်မှ ထည့်သွင်းစရာမလိုဘဲ အင်တာနက်ဘရောက်ဇာမှ တိုက်ရိုက် အခမဲ့ အသုံးပြုနိုင်ပါသည်။'
+              : 'PonSarYay was built specifically to solve this problem for creators across Myanmar. By leveraging modern HTML5 Canvas technology and bundling over 34 handcrafted Unicode fonts, creators can design professional social media quotes, poetic reflections, and announcement banners directly in their mobile or desktop browser in seconds.'}
+          </p>
+        </div>
+      </section>
+
+      {/* Core Principles */}
+      <section className="mb-12">
+        <h3 className="text-xl sm:text-2xl font-bold mb-6 tracking-tight" style={{ color: textPrimary }}>Our Core Principles</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="p-6 rounded-2xl border" style={{ backgroundColor: cardBg, borderColor }}>
+            <ShieldCheck size={28} className="text-emerald-500 mb-4" />
+            <h4 className="text-base sm:text-lg font-bold mb-2" style={{ color: textPrimary }}>Privacy First</h4>
+            <p className="text-sm sm:text-base leading-relaxed" style={{ color: textSecondary }}>
+              Zero server uploads. Your photos and designs remain strictly inside your browser.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl border" style={{ backgroundColor: cardBg, borderColor }}>
+            <Zap size={28} className="text-orange-500 mb-4" />
+            <h4 className="text-base sm:text-lg font-bold mb-2" style={{ color: textPrimary }}>Instant & Frictionless</h4>
+            <p className="text-sm sm:text-base leading-relaxed" style={{ color: textSecondary }}>
+              No sign-up forms, no credit cards, no watermarks, and no software installations.
+            </p>
+          </div>
+
+          <div className="p-6 rounded-2xl border" style={{ backgroundColor: cardBg, borderColor }}>
+            <Sparkles size={28} className="text-blue-500 mb-4" />
+            <h4 className="text-base sm:text-lg font-bold mb-2" style={{ color: textPrimary }}>Authentic Typography</h4>
+            <p className="text-sm sm:text-base leading-relaxed" style={{ color: textSecondary }}>
+              Deep respect for Myanmar script shaping, proper vertical line-heights, and font artist credits.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Font Credits & Creators Section */}
+      <section className="space-y-6 mb-12">
+        <div className="p-6 sm:p-10 rounded-2xl border" style={{ backgroundColor: cardBg, borderColor }}>
+          <div className="flex items-center gap-3 mb-4">
+            <Heart size={26} className="text-red-500 fill-red-500" />
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tight" style={{ color: textPrimary }}>
+              {language === 'my' ? 'ဖောင့်ဖန်တီးသူများအား ဂုဏ်ပြုမှတ်တမ်း' : 'Font Credits & Author Acknowledgements'}
+            </h2>
+          </div>
+          <p className="text-sm sm:text-lg leading-relaxed mb-8" style={{ color: textSecondary }}>
             {t('about_credits_desc')}
           </p>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(220px, 1fr))',
-            gap: 12,
-          }}>
-            {FONT_CREDITS.map(font => (
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+            {FONT_CREDITS.map((font) => (
               <div
                 key={font.name}
+                className="p-4 rounded-xl border transition-all hover:border-orange-500/50"
                 style={{
-                  padding: '14px 16px',
-                  borderRadius: 10,
-                  border: `1px solid ${darkMode ? '#2a2a2a' : '#e5e5e5'}`,
-                  backgroundColor: darkMode ? '#111111' : '#fafafa',
+                  backgroundColor: darkMode ? '#181818' : '#ffffff',
+                  borderColor,
                 }}
               >
-                <div style={{ fontSize: '0.9rem', fontWeight: 600, color: darkMode ? '#e5e5e5' : '#262626', marginBottom: 4 }}>
-                  {font.name}
-                </div>
-                <div style={{ fontSize: '0.75rem', color: '#737373' }}>
+                <div className="text-base font-semibold mb-1 truncate" style={{ color: textPrimary }}>{font.name}</div>
+                <div className="text-sm truncate" style={{ color: textSecondary }}>
                   {font.author}
                 </div>
               </div>
             ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Open Source */}
-        <section style={{ marginBottom: 48 }}>
-          <h2 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: 16, color: darkMode ? '#f5f5f5' : '#171717', display: 'flex', alignItems: 'center' }}>
-            <Github size={20} style={{ marginRight: 8 }} />
-            Open Source
-          </h2>
-
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', fontSize: '1rem', lineHeight: 1.8, color: darkMode ? '#a3a3a3' : '#525252' }}>
-            <p style={{ margin: 0 }}>
-              <strong>Philosophy:</strong> လှပသေသပ်တဲ့ မြန်မာဖောင့် (Myanmar Fonts) တွေကို အသုံးပြုပြီး ဓာတ်ပုံတွေပေါ်မှာ စာသားတွေ လွတ်လပ်စွာ ရေးသားဖန်တီးနိုင်တဲ့ Tool တစ်ခုကို မြန်မာနိုင်ငံက ဖန်တီးရှင် (Creative) တွေအတွက် လွယ်ကူစွာ အသုံးပြုနိုင်စေဖို့နဲ့ ပိုမိုကောင်းမွန်တဲ့ ပတ်ဝန်းကျင်တစ်ခု အတူတကွ ဖန်တီးနိုင်ဖို့ ရည်ရွယ်ပြီး ဒီပရောဂျက်ကို <strong>Open Source</strong> အနေနဲ့ မျှဝေထားတာ ဖြစ်ပါတယ်။
-            </p>
-
-            <p style={{ margin: 0 }}>
-              <strong>Tech Stack:</strong> ဒီ application ကို ခေတ်မီနည်းပညာတွေဖြစ်တဲ့ <strong>React</strong> နဲ့ <strong>Fabric.js</strong> တို့ကို အဓိက အသုံးပြုပြီး တည်ဆောက်ထားပါတယ်။
-            </p>
-
-            <div style={{
-              padding: '24px',
-              backgroundColor: darkMode ? '#111111' : '#f8fafc',
-              borderRadius: '12px',
-              border: `1px solid ${darkMode ? '#2a2a2a' : '#e2e8f0'}`,
-              marginTop: '8px',
-              marginBottom: '8px'
-            }}>
-              <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: darkMode ? '#e5e5e5' : '#1e293b', marginTop: 0, marginBottom: 16, display: 'flex', alignItems: 'center' }}>
-                Developer များ ပါဝင်အားဖြည့်နိုင်ပါတယ် 🚀
-              </h3>
-              <ul style={{ margin: 0, paddingLeft: '20px', display: 'flex', flexDirection: 'column', gap: '12px', color: darkMode ? '#a3a3a3' : '#475569' }}>
-                <li><strong>Bug Fixes & Features:</strong> အမှားလေးတွေ တွေ့ရင် ပြင်ဆင်ပေးတာပဲဖြစ်ဖြစ်၊ Feature အသစ်တွေ အကြံပြုတာပဲဖြစ်ဖြစ် လွတ်လပ်စွာ ပါဝင်ဆွေးနွေးနိုင်ပါတယ်။</li>
-                <li><strong>How to Contribute:</strong> Source code အပြည့်အစုံကို <a href="https://github.com/myathtookhine/PonSarYay/" target="_blank" rel="noopener noreferrer" style={{ color: '#3b82f6', textDecoration: 'none', fontWeight: 500 }}>GitHub</a> မှာ လေ့လာနိုင်ပါတယ်။ ကုဒ်ရေးသားရာမှာ ပါဝင်ချင်တယ်ဆိုရင်တော့ Pull Requests (PRs) တွေ တင်ပြီး ကူညီပေးနိုင်ပါတယ်။</li>
-                <li><strong>License:</strong> ဒီ Code တွေကို <strong>MIT License</strong> အောက်ကနေ ဖြန့်ဝေထားတာဖြစ်လို့ လွတ်လပ်စွာ အသုံးပြုနိုင်ပါတယ်။</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <LandingFooter />
-    </div>
+      {/* Community Section */}
+      <section className="p-8 sm:p-10 rounded-2xl border text-center space-y-5" style={{ backgroundColor: cardBg, borderColor }}>
+        <h3 className="text-xl sm:text-2xl font-bold" style={{ color: textPrimary }}>
+          {language === 'my' ? 'အကြံပြုချက်နှင့် ပူးပေါင်းပါဝင်မှု' : 'Community & Feedback'}
+        </h3>
+        <p className="text-sm sm:text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: textSecondary }}>
+          {language === 'my'
+            ? 'PonSarYay ကို အသုံးပြုသူများအတွက် အကောင်းမွန်ဆုံး ဖြစ်စေရန် အမြဲ ကြိုးပမ်းလျက်ရှိပါသည်။ အကြံပြုချက်များ၊ အမှားအယွင်းများ သို့မဟုတ် လိုအပ်သော လုပ်ဆောင်ချက်များကို ဝေမျှပေးနိုင်ပါသည်။'
+            : 'Pon-Sar-Yay is dedicated to the creative community. We welcome creators, designers, and font enthusiasts to share feedback, report bugs, and propose new features.'}
+        </p>
+        <div className="pt-3 flex flex-wrap justify-center gap-3">
+          <a
+            href="/contact"
+            className="px-6 py-2.5 rounded-xl bg-orange-600 hover:bg-orange-500 text-white text-sm font-semibold transition-colors"
+          >
+            {language === 'my' ? 'ဆက်သွယ်ရန်' : 'Contact Us'}
+          </a>
+        </div>
+      </section>
+    </StaticPageLayout>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ColorPicker } from "./ColorPicker.jsx";
 import { TextStyleButtons } from "./TextStyleButtons.jsx";
 import { useLanguage } from "../../contexts/LanguageContext.jsx";
+import { trackShadowPreset } from "../../utils/analytics.js";
 
 const STROKE_MAX = 16;
 
@@ -30,6 +31,11 @@ export function TextControls({ canvasApi }) {
     italic: false,
     underline: false,
   });
+  const [shadowEnabled, setShadowEnabled] = useState(false);
+  const [shadowColor, setShadowColor] = useState("#000000");
+  const [shadowBlur, setShadowBlur] = useState(8);
+  const [shadowOffsetX, setShadowOffsetX] = useState(2);
+  const [shadowOffsetY, setShadowOffsetY] = useState(2);
 
   useEffect(() => {
     const obj = canvasApi.selectedObject;
@@ -52,6 +58,19 @@ export function TextControls({ canvasApi }) {
       italic: obj.fontStyle === "italic",
       underline: !!obj.underline,
     });
+    if (obj.shadow) {
+      setShadowEnabled(true);
+      setShadowColor(obj.shadow.color || "#000000");
+      setShadowBlur(typeof obj.shadow.blur === "number" ? obj.shadow.blur : 8);
+      setShadowOffsetX(
+        typeof obj.shadow.offsetX === "number" ? obj.shadow.offsetX : 2,
+      );
+      setShadowOffsetY(
+        typeof obj.shadow.offsetY === "number" ? obj.shadow.offsetY : 2,
+      );
+    } else {
+      setShadowEnabled(false);
+    }
   }, [canvasApi.selectedObject]);
 
   useEffect(() => {
@@ -66,6 +85,14 @@ export function TextControls({ canvasApi }) {
       fontWeight: styles.bold ? "700" : "400",
       fontStyle: styles.italic ? "italic" : "normal",
       underline: styles.underline,
+      shadow: shadowEnabled
+        ? {
+            color: shadowColor,
+            blur: Number(shadowBlur) || 0,
+            offsetX: Number(shadowOffsetX) || 0,
+            offsetY: Number(shadowOffsetY) || 0,
+          }
+        : null,
     });
   }, [
     fontSize,
@@ -76,6 +103,11 @@ export function TextControls({ canvasApi }) {
     lineHeight,
     align,
     styles,
+    shadowEnabled,
+    shadowColor,
+    shadowBlur,
+    shadowOffsetX,
+    shadowOffsetY,
     canvasApi,
   ]);
 
@@ -236,6 +268,110 @@ export function TextControls({ canvasApi }) {
           />
           <div className="w-10 text-right">{Math.round(opacity * 100)}%</div>
         </div>
+      </div>
+
+      {/* Text Shadow & Glow Section */}
+      <div className="space-y-2 pt-2 border-t border-neutral-800">
+        <div className="flex items-center justify-between">
+          <span className="text-[11px] font-medium text-neutral-300">
+            {t("shadow")}
+          </span>
+          <button
+            type="button"
+            onClick={() => setShadowEnabled(!shadowEnabled)}
+            className={`px-2 py-0.5 rounded text-[10px] font-semibold transition-colors ${
+              shadowEnabled
+                ? "bg-orange-600 text-white"
+                : "bg-neutral-800 text-neutral-400 hover:text-neutral-200"
+            }`}
+          >
+            {shadowEnabled ? "ON" : "OFF"}
+          </button>
+        </div>
+
+        {shadowEnabled && (
+          <div className="space-y-2 pt-1">
+            {/* Presets */}
+            <div className="flex gap-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setShadowBlur(14);
+                  setShadowOffsetX(0);
+                  setShadowOffsetY(0);
+                  trackShadowPreset("glow");
+                }}
+                className="flex-1 py-1 px-1.5 rounded border border-neutral-700 bg-neutral-900 hover:border-orange-500 text-[10px] font-medium text-neutral-200"
+              >
+                {t("glow")}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShadowBlur(8);
+                  setShadowOffsetX(2);
+                  setShadowOffsetY(2);
+                  trackShadowPreset("soft_shadow");
+                }}
+                className="flex-1 py-1 px-1.5 rounded border border-neutral-700 bg-neutral-900 hover:border-orange-500 text-[10px] font-medium text-neutral-200"
+              >
+                {t("soft_shadow")}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShadowBlur(0);
+                  setShadowOffsetX(3);
+                  setShadowOffsetY(3);
+                  trackShadowPreset("hard_shadow");
+                }}
+                className="flex-1 py-1 px-1.5 rounded border border-neutral-700 bg-neutral-900 hover:border-orange-500 text-[10px] font-medium text-neutral-200"
+              >
+                {t("hard_shadow")}
+              </button>
+            </div>
+
+            {/* Blur */}
+            <div className="space-y-0.5">
+              <div className="flex justify-between text-[10px] text-neutral-400">
+                <span>{t("blur")}</span>
+                <span>{shadowBlur}px</span>
+              </div>
+              <input
+                type="range"
+                min="0"
+                max="30"
+                value={shadowBlur}
+                onChange={(e) => setShadowBlur(Number(e.target.value))}
+                className="w-full h-4"
+              />
+            </div>
+
+            {/* Offset Y */}
+            <div className="space-y-0.5">
+              <div className="flex justify-between text-[10px] text-neutral-400">
+                <span>{t("offset y")}</span>
+                <span>{shadowOffsetY}px</span>
+              </div>
+              <input
+                type="range"
+                min="-20"
+                max="20"
+                value={shadowOffsetY}
+                onChange={(e) => setShadowOffsetY(Number(e.target.value))}
+                className="w-full h-4"
+              />
+            </div>
+
+            {/* Shadow Color */}
+            <ColorPicker
+              label={t("color")}
+              value={shadowColor}
+              onChange={setShadowColor}
+              hideSwatches={true}
+            />
+          </div>
+        )}
       </div>
     </div>
   );
