@@ -4,7 +4,7 @@ import { TERMS_OF_SERVICE_CONTENT } from '../data/legalData.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { FileText, CheckCircle } from 'lucide-react';
-import { ArticleContent } from '../components/Common/ArticleContent.jsx';
+import { ArticleContent } from '../components/common/ArticleContent.jsx';
 
 export function TermsOfServicePage() {
   const { language } = useLanguage();

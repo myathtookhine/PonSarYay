@@ -5,7 +5,7 @@ import { BLOG_POSTS } from '../data/blogData.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { Calendar, Clock, User, ArrowLeft, ArrowRight, Sparkles } from 'lucide-react';
-import { ArticleContent } from '../components/Common/ArticleContent.jsx';
+import { ArticleContent } from '../components/common/ArticleContent.jsx';
 
 export function BlogPostPage() {
   const { slug } = useParams();

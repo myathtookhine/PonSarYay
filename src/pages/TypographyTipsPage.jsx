@@ -5,7 +5,7 @@ import { TYPOGRAPHY_TIPS } from '../data/guidesData.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { Clock, Tag, BookOpen, ArrowRight, Sparkles } from 'lucide-react';
-import { ArticleContent } from '../components/Common/ArticleContent.jsx';
+import { ArticleContent } from '../components/common/ArticleContent.jsx';
 
 export function TypographyTipsPage() {
   const { language } = useLanguage();

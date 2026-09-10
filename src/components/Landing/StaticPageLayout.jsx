@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { LandingHeader } from './LandingHeader.jsx';
 import { LandingFooter } from './LandingFooter.jsx';
-import { SEO } from '../Common/SEO.jsx';
+import { SEO } from '../common/SEO.jsx';
 import { useTheme } from '../../contexts/ThemeContext.jsx';
 import { ChevronRight, Home } from 'lucide-react';
 

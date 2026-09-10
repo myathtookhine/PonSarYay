@@ -12,7 +12,7 @@ import { HowToUsePage } from './pages/HowToUsePage.jsx';
 import { TypographyTipsPage } from './pages/TypographyTipsPage.jsx';
 import { BlogPage } from './pages/BlogPage.jsx';
 import { BlogPostPage } from './pages/BlogPostPage.jsx';
-import { ScrollToTop } from './components/Common/ScrollToTop.jsx';
+import { ScrollToTop } from './components/common/ScrollToTop.jsx';
 import { trackPageView } from './utils/analytics.js';
 
 const MIN_SPLASH_MS = 1800;

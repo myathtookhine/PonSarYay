@@ -5,7 +5,7 @@ import { HOW_TO_USE_STEPS } from '../data/guidesData.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { ArrowRight, Lightbulb, Sparkles, Check } from 'lucide-react';
-import { renderFormattedText } from '../components/Common/ArticleContent.jsx';
+import { renderFormattedText } from '../components/common/ArticleContent.jsx';
 
 export function HowToUsePage() {
   const { language } = useLanguage();

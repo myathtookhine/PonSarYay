@@ -4,7 +4,7 @@ import { PRIVACY_POLICY_CONTENT } from '../data/legalData.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { ShieldCheck, Lock, ServerOff } from 'lucide-react';
-import { ArticleContent } from '../components/Common/ArticleContent.jsx';
+import { ArticleContent } from '../components/common/ArticleContent.jsx';
 
 export function PrivacyPolicyPage() {
   const { language } = useLanguage();
