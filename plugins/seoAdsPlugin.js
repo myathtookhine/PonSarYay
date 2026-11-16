@@ -62,11 +62,32 @@ export function seoAdsPlugin(env) {
       if (siteUrl) robots.push('', `Sitemap: ${siteUrl}/sitemap.xml`);
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: robots.join('\n') + '\n' });
 
-      // sitemap.xml
+      // sitemap.xml + feed.json need absolute URLs
       if (!siteUrl) {
-        this.warn('VITE_SITE_URL not set — skipping sitemap.xml');
+        this.warn('VITE_SITE_URL not set — skipping sitemap.xml and feed.json');
         return;
       }
+
+      // feed.json — public list of blog posts, consumed by infiniteframe.online
+      const feed = {
+        site: siteUrl,
+        updated: new Date().toISOString(),
+        posts: BLOG_POSTS.map((p) => ({
+          slug: p.slug,
+          url: `${siteUrl}/blog/${p.slug}`,
+          title: p.title,
+          title_my: p.title_my || p.title,
+          excerpt: p.excerpt,
+          excerpt_my: p.excerpt_my || p.excerpt,
+          category: p.category,
+          category_my: p.category_my || p.category,
+          date: p.date,
+          readTime: p.readTime,
+          readTime_my: p.readTime_my || p.readTime,
+        })),
+      };
+      this.emitFile({ type: 'asset', fileName: 'feed.json', source: JSON.stringify(feed) });
+
       const routes = [
         ...STATIC_ROUTES,
         ...BLOG_POSTS.map((p) => ({ path: `/blog/${p.slug}`, priority: '0.7', changefreq: 'monthly' })),
