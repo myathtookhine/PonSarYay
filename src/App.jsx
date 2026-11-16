@@ -19,10 +19,12 @@ const MIN_SPLASH_MS = 1800;
 const SPLASH_FADE_MS = 500;
 
 function App() {
-  const [showSplash, setShowSplash] = useState(true);
+  const location = useLocation();
+  // Splash only on the editor (it waits for fonts). Content pages render
+  // immediately so visitors and AdSense/Google crawlers see real content.
+  const [showSplash, setShowSplash] = useState(() => location.pathname === '/editor');
   const [splashExiting, setSplashExiting] = useState(false);
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const location = useLocation();
 
   // Track SPA pageviews on route change
   useEffect(() => {

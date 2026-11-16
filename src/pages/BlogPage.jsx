@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { StaticPageLayout } from '../components/Landing/StaticPageLayout.jsx';
+import { AdSlot } from '../components/common/AdSlot.jsx';
 import { BLOG_POSTS } from '../data/blogData.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
@@ -136,6 +137,8 @@ export function BlogPage() {
           );
         })}
       </div>
+
+      <AdSlot type="display" />
     </StaticPageLayout>
   );
 }

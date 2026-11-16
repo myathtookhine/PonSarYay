@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { StaticPageLayout } from '../components/Landing/StaticPageLayout.jsx';
+import { AdSlot } from '../components/common/AdSlot.jsx';
 import { HOW_TO_USE_STEPS } from '../data/guidesData.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
@@ -125,6 +126,8 @@ export function HowToUsePage() {
           );
         })}
       </div>
+
+      <AdSlot type="display" />
 
       {/* Bottom CTA */}
       <div className="mt-16 text-center p-8 sm:p-12 rounded-2xl border" style={{ backgroundColor: cardBg, borderColor }}>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { StaticPageLayout } from '../components/Landing/StaticPageLayout.jsx';
+import { AdSlot } from '../components/common/AdSlot.jsx';
 import { TYPOGRAPHY_TIPS } from '../data/guidesData.js';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
@@ -83,6 +84,8 @@ export function TypographyTipsPage() {
           );
         })}
       </div>
+
+      <AdSlot type="article" />
 
       {/* Editor Promotion CTA */}
       <div

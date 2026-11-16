@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { LandingHeader } from '../components/Landing/LandingHeader.jsx';
 import { LandingFooter } from '../components/Landing/LandingFooter.jsx';
 import { TypewriterHeadline } from '../components/Landing/TypewriterHeadline.jsx';
+import { AdSlot } from '../components/common/AdSlot.jsx';
 import { useLanguage } from '../contexts/LanguageContext.jsx';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { Type, PenTool, Download, Zap, ArrowRight, Signal, Wifi, BatteryFull, BookOpen, ChevronDown } from 'lucide-react';
@@ -98,6 +99,10 @@ export function LandingPage() {
           })}
         </div>
       </section>
+
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6">
+        <AdSlot type="display" />
+      </div>
 
       {/* Guides & Resources Showcase Section */}
       <section id="guides-showcase" className="py-16 px-4 sm:px-6 max-w-6xl mx-auto w-full scroll-mt-6">
