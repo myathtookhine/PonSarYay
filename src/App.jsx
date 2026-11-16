@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { Suspense, lazy, useEffect, useState } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import { AppShell } from './components/Layout/AppShell.jsx';
 import { SplashScreen } from './components/SplashScreen/SplashScreen.jsx';
 import { LandingPage } from './pages/LandingPage.jsx';
 import { AboutPage } from './pages/AboutPage.jsx';
@@ -15,6 +14,9 @@ import { BlogPostPage } from './pages/BlogPostPage.jsx';
 import { ScrollToTop } from './components/common/ScrollToTop.jsx';
 import { trackPageView } from './utils/analytics.js';
 
+// Editor (fabric.js) is loaded only when /editor is opened
+const AppShell = lazy(() => import('./components/Layout/AppShell.jsx').then((m) => ({ default: m.AppShell })));
+
 const MIN_SPLASH_MS = 1800;
 const SPLASH_FADE_MS = 500;
 
@@ -24,7 +26,8 @@ function App() {
   // immediately so visitors and AdSense/Google crawlers see real content.
   const [showSplash, setShowSplash] = useState(() => location.pathname === '/editor');
   const [splashExiting, setSplashExiting] = useState(false);
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  // navigator is missing/partial during prerendering, so treat "unknown" as online
+  const [isOnline, setIsOnline] = useState(() => typeof navigator === 'undefined' || navigator.onLine !== false);
 
   // Track SPA pageviews on route change
   useEffect(() => {
@@ -93,7 +96,14 @@ function App() {
     <ScrollToTop />
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/editor" element={<AppShell />} />
+      <Route
+        path="/editor"
+        element={
+          <Suspense fallback={<SplashScreen exiting={false} />}>
+            <AppShell />
+          </Suspense>
+        }
+      />
       <Route path="/about" element={<AboutPage />} />
       <Route path="/how-to-use" element={<HowToUsePage />} />
       <Route path="/typography-tips" element={<TypographyTipsPage />} />

@@ -1,7 +1,11 @@
-import { useEffect } from 'react';
+import { createContext, useContext, useEffect } from 'react';
 
 const DEFAULT_TITLE = 'Pon-Sar-Yay - Myanmar Text-on-Image Editor';
 const DEFAULT_DESC = 'Add beautiful custom Myanmar fonts and text to your photos with Pon-Sar-Yay, a sleek, privacy-first, and easy-to-use Myanmar text-on-image editor.';
+
+// During prerendering (entry-server.jsx) a collector object is provided here so
+// page metadata can be written into the static HTML. In the browser it's null.
+export const HeadContext = createContext(null);
 
 export function SEO({
   title,
@@ -11,9 +15,15 @@ export function SEO({
   ogType = 'website',
   ogImage = '/android-chrome-512x512.png',
 }) {
+  const fullTitle = title ? `${title} | Pon-Sar-Yay` : DEFAULT_TITLE;
+  const headCollector = useContext(HeadContext);
+
+  if (headCollector) {
+    Object.assign(headCollector, { title: fullTitle, description, keywords, canonicalUrl, ogType, ogImage });
+  }
+
   useEffect(() => {
     // 1. Update Title
-    const fullTitle = title ? `${title} | Pon-Sar-Yay` : DEFAULT_TITLE;
     document.title = fullTitle;
 
     // Helper to update or create a meta tag
@@ -55,7 +65,7 @@ export function SEO({
       }
       linkEl.setAttribute('href', canonicalUrl);
     }
-  }, [title, description, keywords, canonicalUrl, ogType, ogImage]);
+  }, [fullTitle, description, keywords, canonicalUrl, ogType, ogImage]);
 
   return null;
 }

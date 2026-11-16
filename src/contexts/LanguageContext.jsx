@@ -234,8 +234,9 @@ const translations = {
 
 const LanguageContext = createContext();
 
-export function LanguageProvider({ children }) {
-  const [language, setLanguage] = useState('my'); 
+// initialLanguage is only overridden by the build-time prerenderer (English HTML for crawlers)
+export function LanguageProvider({ children, initialLanguage = 'my' }) {
+  const [language, setLanguage] = useState(initialLanguage);
   
   useEffect(() => {
     const savedLang = localStorage.getItem('app_language');

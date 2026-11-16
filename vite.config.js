@@ -4,8 +4,22 @@ import { compression } from 'vite-plugin-compression2';
 import { seoAdsPlugin } from './plugins/seoAdsPlugin.js';
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ mode, isSsrBuild }) => {
   const env = loadEnv(mode, process.cwd(), 'VITE_');
+
+  // SSR build is only used at build time by scripts/prerender.mjs
+  if (isSsrBuild) {
+    return {
+      plugins: [react()],
+      build: {
+        outDir: 'dist-ssr',
+        emptyOutDir: true,
+        rollupOptions: {
+          output: { entryFileNames: '[name].mjs', chunkFileNames: '[name]-[hash].mjs' },
+        },
+      },
+    };
+  }
 
   return {
     plugins: [
