@@ -24,24 +24,38 @@ export function seoAdsPlugin(env) {
   const rawClient = env.VITE_ADSENSE_CLIENT || '';
   const client = rawClient && rawClient !== PLACEHOLDER_CLIENT ? rawClient : '';
   const siteUrl = (env.VITE_SITE_URL || '').replace(/\/+$/, '');
+  // Microsoft Clarity project ID (letters/numbers only)
+  const clarityId = /^[a-z0-9]+$/i.test(env.VITE_CLARITY_PROJECT_ID || '') ? env.VITE_CLARITY_PROJECT_ID : '';
 
   return {
     name: 'ponsaryay-seo-ads',
 
     transformIndexHtml() {
-      if (!client) return [];
-      return [
-        { tag: 'meta', attrs: { name: 'google-adsense-account', content: client }, injectTo: 'head' },
-        {
+      const tags = [];
+      if (client) {
+        tags.push(
+          { tag: 'meta', attrs: { name: 'google-adsense-account', content: client }, injectTo: 'head' },
+          {
+            tag: 'script',
+            attrs: {
+              async: true,
+              src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`,
+              crossorigin: 'anonymous',
+            },
+            injectTo: 'head',
+          }
+        );
+      }
+      if (clarityId) {
+        // Official Clarity loader. The editor is masked with data-clarity-mask (see AppShell.jsx)
+        // so users' photos and text are never captured in session recordings.
+        tags.push({
           tag: 'script',
-          attrs: {
-            async: true,
-            src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${client}`,
-            crossorigin: 'anonymous',
-          },
+          children: `(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${clarityId}");`,
           injectTo: 'head',
-        },
-      ];
+        });
+      }
+      return tags;
     },
 
     generateBundle() {

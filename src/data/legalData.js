@@ -1,6 +1,6 @@
 export const PRIVACY_POLICY_CONTENT = {
-  lastUpdated: "January 15, 2026",
-  lastUpdated_my: "၂၀၂၆ ခုနှစ်၊ ဇန်နဝါရီလ ၁၅ ရက်",
+  lastUpdated: "November 18, 2026",
+  lastUpdated_my: "၂၀၂၆ ခုနှစ်၊ နိုဝင်ဘာလ ၁၈ ရက်",
   sections: [
     {
       id: "overview",
@@ -21,11 +21,13 @@ PonSarYay သည် အသုံးပြုသူ၏ ကိုယ်ရေး�
 
 - **Browser & Device Data:** Technical details such as browser type, operating system version, device category (desktop, tablet, or mobile), and screen resolution.
 - **Aggregated Analytics Events:** We use Google Analytics 4 (GA4) to collect anonymized usage events (such as page views, image export counts, language selections, and session duration). These metrics help us understand which fonts and features are most popular.
+- **Microsoft Clarity:** We use Microsoft Clarity to understand how visitors use our website through heatmaps, session replays and usage metrics, so we can improve the design. Clarity uses cookies and similar technologies to collect behavioral data such as clicks, scrolling and mouse movement. **The editor is fully masked: your photos, the text you type and your exported images are never captured.** Data is processed by Microsoft as described in the [Microsoft Privacy Statement](https://www.microsoft.com/privacy/privacystatement).
 - **Local Storage:** We utilize your browser's \`localStorage\` exclusively to remember your preferred interface theme (Light or Dark mode) and interface language (English or Myanmar). No personal identifiers or image files are saved in local storage.`,
       content_my: `PonSarYay သည် သင့်စက်ထဲတွင်သာ တိုက်ရိုက်အလုပ်လုပ်သဖြင့် အကောင့်ဖွင့်ရန်၊ စကားဝှက်ပေးရန် သို့မဟုတ် ကိုယ်ရေးအချက်အလက် ဖြည့်သွင်းရန် မလိုအပ်ပါ။ ဝဘ်ဆိုက်ကောင်းမွန်စွာ လည်ပတ်နိုင်ရေးအတွက် အောက်ပါ နည်းပညာဆိုင်ရာ အချက်အလက် အနည်းငယ်ကိုသာ ကောက်ယူပါသည်-
 
 - **ဘရောက်ဇာနှင့် စက်ပစ္စည်း အချက်အလက်:** ဘရောက်ဇာအမျိုးအစား၊ ဖုန်း/ကွန်ပျူတာ စနစ်နှင့် မျက်နှာပြင်အရွယ်အစား။
 - **စာရင်းအင်းဆိုင်ရာ အချက်အလက်များ (Google Analytics 4):** မည်သည့်ဖောင့်များ လူကြိုက်များသနည်း၊ ပုံထုတ်ယူမှု အရေအတွက် စသည့် အမည်မဖော်ပြသော စာရင်းအင်းများကိုသာ ကောက်ယူပါသည်။
+- **Microsoft Clarity:** ဝဘ်ဆိုက်ဒီဇိုင်းကို ပိုမိုကောင်းမွန်စေရန် ကြည့်ရှုသူများ မည်သို့ အသုံးပြုသည်ကို heatmap၊ session replay နှင့် အသုံးပြုမှုစာရင်းများဖြင့် နားလည်နိုင်ရန် Microsoft Clarity ကို အသုံးပြုပါသည်။ Clarity သည် နှိပ်ခြင်း၊ scroll ဆွဲခြင်းနှင့် mouse ရွှေ့ခြင်း စသည့် အပြုအမူဆိုင်ရာ အချက်အလက်များကို cookies များဖြင့် ကောက်ယူပါသည်။ **Editor တစ်ခုလုံးကို ဖုံးကွယ်ထားသဖြင့် သင့်ဓာတ်ပုံများ၊ ရိုက်ထည့်သော စာသားများနှင့် ထုတ်ယူသော ပုံများကို လုံးဝ မှတ်တမ်းမတင်ပါ။** အချက်အလက်များကို [Microsoft Privacy Statement](https://www.microsoft.com/privacy/privacystatement) အတိုင်း Microsoft က ကိုင်တွယ်ပါသည်။
 - **စက်တွင်းမှတ်ဉာဏ် (Local Storage):** သင်ရွေးချယ်ထားသော Theme (အလင်း/အမှောင်) နှင့် ဘာသာစကား (မြန်မာ/အင်္ဂလိပ်) ကို မှတ်သားရန်အတွက်သာ သင့်ဘရောက်ဇာ၏ \`localStorage\` ကို အသုံးပြုပါသည်။ မည်သည့် ဓာတ်ပုံ သို့မဟုတ် ကိုယ်ရေးအချက်အလက်ကိုမျှ သိမ်းဆည်းခြင်း မရှိပါ။`,
     },
     {

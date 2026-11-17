@@ -39,7 +39,12 @@ export function AppShell() {
   }, [canvasApi.setShowToast]);
 
   return (
-    <div className={`h-[100dvh] w-full overflow-hidden bg-neutral-950 text-neutral-50 flex flex-col ${!darkMode ? 'light-mode' : ''}`}>
+    // data-clarity-mask: Microsoft Clarity masks everything inside the editor (photos, typed text,
+    // preview/crop images) so no user content appears in session recordings.
+    <div
+      data-clarity-mask="True"
+      className={`h-[100dvh] w-full overflow-hidden bg-neutral-950 text-neutral-50 flex flex-col ${!darkMode ? 'light-mode' : ''}`}
+    >
       <header className="border-b border-neutral-800 px-3 md:px-4 py-2 md:py-3 flex items-center justify-between shrink-0">
         <Link to="/" className="flex items-center gap-3" style={{ textDecoration: 'none', color: 'inherit' }}>
           <img src="/ponsaryay.png" alt="Pon-Sar-Yay Logo" className="w-10 h-10 object-contain rounded-md" />
